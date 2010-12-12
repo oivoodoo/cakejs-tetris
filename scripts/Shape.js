@@ -1,9 +1,7 @@
 Shape = Klass(CanvasNode, {
-	map : [ [0, 0, 0, 0], 
-			[0, 1, 1, 0], 
-			[0, 1, 1, 0], 
-			[0, 0, 0, 0]],
+	map: [],
 	drag: false,
+	degree: 0,
 	
 	initialize: function(options) {
 		CanvasNode.initialize.call(this);
@@ -24,8 +22,13 @@ Shape = Klass(CanvasNode, {
 			this.x += (this.x - e.x > 0 ? -1 : 1);
 			this.y += (this.y - e.y > 0 ? -1 : 1);
 		});
+
+		this.addEventListener('')
 		
 		this.render_shape();
+	},
+
+	rotate: function() {
 	},
 	
 	render_shape: function() {
