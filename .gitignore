@@ -1,0 +1,13 @@
+log/*.log
+tmp/**/*
+db/*.sqlite3
+.generators
+*.i*
+tmp/
+*~
+config/database.yml
+public/system/*
+vendor/rails
+*.swp
+*.swo
+config/sumbur.yml
