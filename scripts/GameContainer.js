@@ -1,11 +1,6 @@
 GameContainer = Klass(CanvasNode, { 
-	shapes: [
-		{map: [[[1,1],[1,1]]]},
-		{map: [[[1,1],[1,0],[1,0]],[[1,1,1],[0,0,1]],[[0,1],[0,1],[1,1]],[[1,0,0],[1,1,1]]]},
-		{map: [[[1,1,1],[0,1,0]],[[0,1],[1,1],[0,1]],[[0,1,0],[1,1,1]],[[1,0],[1,1],[1,0]]]},
-		{map: [[[1,1,1,1]],[[1],[1],[1],[1]]]}
-	],
-
+	score: new ScorePanel(),
+	
 	initialize: function(canvasElem) {
 		CanvasNode.initialize.call(this);
 		
@@ -13,8 +8,10 @@ GameContainer = Klass(CanvasNode, {
 		this.canvas.frameDuration = 30;
 		this.canvas.append(this);
 
-		for(var i = 0; i < this.shapes.length; i++) {
-			this.append(new Shape({map: this.shapes[i].map}));
+		// This panel will generate next shape and preview it.
+		this.append(this.score);
+		for(var i = 0; i < 10; i++) {
+			this.append(this.score.next());
 		}
 	},
 
