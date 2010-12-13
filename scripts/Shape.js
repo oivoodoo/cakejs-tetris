@@ -23,14 +23,14 @@ Shape = Klass(CanvasNode, {
 		}
 		
 		this.current_map = this.map[this.degree];
+
+		this.addEventListener('click', function(e) {
+			this.rotate();
+		});
 		
 		this.addEventListener('drag', function(e) {
 			this.x += (this.x - e.x > 0 ? -1 : 1);
 			this.y += (this.y - e.y > 0 ? -1 : 1);
-		});
-
-		this.addEventListener('click', function() {
-			this.rotate();
 		});
 		
 		this.addFrameListener(function() {
@@ -52,11 +52,12 @@ Shape = Klass(CanvasNode, {
 	},
 	
 	render_shape: function() {
-		for(var i = 0; i < this.current_map.length; i++) {
-			for(var j = 0; j < this.current_map[i].length; j++) {
-				if (this.current_map[i][j] == 1) {
-					
-					this.append(new Block({cx: this.x + j * 10, cy: this.y + i * 10}));
+		if (this.childNodes.length == 0) {
+			for(var i = 0; i < this.current_map.length; i++) {
+				for(var j = 0; j < this.current_map[i].length; j++) {
+					if (this.current_map[i][j] == 1) {				
+						this.append(new Block({cx: this.x + j * 10, cy: this.y + i * 10}));
+					}
 				}
 			}
 		}
