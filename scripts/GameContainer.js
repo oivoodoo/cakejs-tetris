@@ -1,5 +1,5 @@
 GameContainer = Klass(CanvasNode, { 
-	score: new ScorePanel(),
+	score: new ScorePanel(),	
 	
 	initialize: function(canvasElem) {
 		CanvasNode.initialize.call(this);
@@ -13,6 +13,7 @@ GameContainer = Klass(CanvasNode, {
 		for(var i = 0; i < 10; i++) {
 			this.append(this.score.next());
 		}
+		
 	},
 
 	start: function() {
