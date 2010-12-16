@@ -2,7 +2,7 @@ Shape = Klass(CanvasNode, {
   map: [],
   degree: 0,
   rotations: 4,
-  default_angle: 0.5 * Math.PI,
+  default_angle: Math.PI / 2,
   
   initialize: function(options) {
     CanvasNode.initialize.call(this);
@@ -19,7 +19,7 @@ Shape = Klass(CanvasNode, {
     });
     
     this.addFrameListener(function(){
-      this.y += 1;
+      // this.y += 1;
     });
     
     this.render_shape();
@@ -89,8 +89,8 @@ Shape = Klass(CanvasNode, {
         for(var j = 0; j < this.map[i].length; j++) {
           if (this.map[i][j] == 1) {        
             this.append(new Block({
-              x: this.x + j * Block.size, 
-              y: this.y + i * Block.size
+              x: j * Block.size, 
+              y: i * Block.size
             }));
           }
         }
