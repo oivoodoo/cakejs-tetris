@@ -1,7 +1,7 @@
 Block = Klass(CanvasNode, {
 	backgroud: 'rgb(0, 0, 0)',
-	opacity: 1.0,
-	size: 10,
+	opacity: 0.8,
+	size: 20,
 	
 	initialize: function(options) {
 		CanvasNode.initialize.call(this);
@@ -10,11 +10,12 @@ Block = Klass(CanvasNode, {
 			fill: this.background,
 			stroke: 'cyan', 
 			strokeWidth: 1,
-			centered: true,
-			x: options.cx,
-			y: options.cy
+			x: options.x,
+			y: options.y,
+			rx: 2,
+			ry: 2
 		});
 		
 		this.append(this.shape);
-	}
+	}	
 });
