@@ -4,5 +4,4 @@ init = function() {
   d.appendChild(c);
   document.body.appendChild(d);
   container = new GameContainer(c);
-  container.start();
 };

@@ -7,7 +7,7 @@ Block = Klass(CanvasNode, {
     CanvasNode.initialize.call(this);
     
     this.shape = new Rectangle(this.size, this.size, {
-      fill: this.background,
+      fill: options.color,
       stroke: 'cyan', 
       strokeWidth: 1,
       x: options.x,

@@ -3,6 +3,7 @@ Shape = Klass(CanvasNode, {
   degree: 0,
   rotations: 4,
   default_angle: Math.PI / 2,
+  step: 1,
   
   initialize: function(options) {
     CanvasNode.initialize.call(this);
@@ -12,18 +13,7 @@ Shape = Klass(CanvasNode, {
     this.addEventListener('click', function(e) {
       this.rotate();
     });
-    
-    this.addEventListener('drag', function(e) {
-      this.x += (this.x - e.x > 0 ? -1 : 1);
-      this.y += (this.y - e.y > 0 ? -1 : 1);
-    });
-    
-    this.addFrameListener(function(){
-      // this.y += 1;
-    });
-    
-    this.render_shape();
-    
+
     if (this.color != null) {
       this.set_color(this.color);
     }
@@ -48,6 +38,11 @@ Shape = Klass(CanvasNode, {
       }
     }
   },
+  
+  update_onframe: function() {
+    this.render_shape();
+    this.update_positions();
+  },
 
   /*
     Method is always running when user try to rotate shape by any events.
@@ -55,7 +50,8 @@ Shape = Klass(CanvasNode, {
     angle of shape by keyboard or screen controls.
   */
   rotate: function() {
-    this.rotation = this.ensure_degree(this.rotation + this.default_angle);
+    this.degree = this.ensure_degree(this.degree + 1);
+    this.removeAllChildren();
   },
   
   /*
@@ -63,20 +59,20 @@ Shape = Klass(CanvasNode, {
     of shape in the working game.
   */
   set_color: function(color) {
-    $.each(this.childNodes, function(i, block){
-      block.fill = color; 
-    });
+    for(var i = 0; i < this.childNodes.length; i++) {
+      this.childNodes[i].fill = color; 
+    }
   },
   
   /*
     Method for ensuring rotation our shapes. We have to create containts
     to rotations.
   */
-  ensure_degree: function(rotation) {
-    if (rotation >= this.rotations * this.default_angle) {
-      rotation = 0;
+  ensure_degree: function(degree) {
+    if (degree >= this.map.length) {
+      degree = 0;
     }
-    return rotation;
+    return degree;
   },
   
   /*
@@ -85,16 +81,26 @@ Shape = Klass(CanvasNode, {
   */
   render_shape: function() {
     if (this.childNodes.length == 0) {
-      for(var i = 0; i < this.map.length; i++) {
-        for(var j = 0; j < this.map[i].length; j++) {
-          if (this.map[i][j] == 1) {        
+      for(var i = 0; i < this.map[this.degree].length; i++) {
+        for(var j = 0; j < this.map[this.degree][i].length; j++) {
+          if (this.map[this.degree][i][j] == 1) {        
             this.append(new Block({
               x: j * Block.size, 
-              y: i * Block.size
+              y: i * Block.size,
+              color: this.color
             }));
           }
         }
       }
     }
+  },
+  
+  /*
+    Move shape in the each frame iteration to the bottom of the game screen.
+  */
+  update_positions: function() {
+    // We are using dynamic step for encreasing step when use click to the 
+    // bottom of keyboard(for example pointer to bottom or 's' key).
+    this.y += this.step;
   }
 });
