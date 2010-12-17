@@ -14,6 +14,8 @@ Shape = Klass(CanvasNode, {
       this.rotate();
     });
 
+    this.render_shape();
+
     if (this.color != null) {
       this.set_color(this.color);
     }
@@ -40,7 +42,6 @@ Shape = Klass(CanvasNode, {
   },
   
   update_onframe: function() {
-    this.render_shape();
     this.update_positions();
   },
 
@@ -52,6 +53,7 @@ Shape = Klass(CanvasNode, {
   rotate: function() {
     this.degree = this.ensure_degree(this.degree + 1);
     this.removeAllChildren();
+    this.render_shape();
   },
   
   /*
@@ -102,5 +104,12 @@ Shape = Klass(CanvasNode, {
     // We are using dynamic step for encreasing step when use click to the 
     // bottom of keyboard(for example pointer to bottom or 's' key).
     this.y += this.step;
+  },
+  
+  /*
+    Get the first line in the shape, for controlling width of the object.
+  */
+  get_line: function() {
+    return this.map[this.degree][0];
   }
 });

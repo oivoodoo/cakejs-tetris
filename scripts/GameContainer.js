@@ -1,8 +1,9 @@
 GameContainer = Klass(CanvasNode, { 
   score: new ScorePanel(),
   background: '#FFFFFF',
-  width: 320,
+  width: Block.size * 16,
   height: 480,
+  
   /*
     Key codes for game keyboard control.
   */
@@ -50,12 +51,17 @@ GameContainer = Klass(CanvasNode, {
   },
   
   move_shape_by_keyboard: function(e) {
+    var shape = this.score.current_shape;
     if (e.keyCode == this.RIGHT) {
-      this.score.current_shape.x += Block.size;
+      shape.x = this.ensure_position(shape.x + Block.size,
+        shape.get_line().length);
     } else if (e.keyCode == this.LEFT) {
-      this.score.current_shape.x -= Block.size;
+      shape.x = this.ensure_position(shape.x - Block.size,
+        shape.get_line().length);
     } else if (e.keyCode == this.SPACE) {
-      this.score.current_shape.rotate();
+      shape.rotate();
+      shape.x = this.ensure_position(shape.x,
+        shape.get_line().length);
     } else if (e.keyCode == this.PAUSE) {
       this.pause();
     } else if (e.keyCode == this.BEGIN) {
@@ -82,5 +88,15 @@ GameContainer = Klass(CanvasNode, {
 
   move_to_bottom: function() {
     this.score.current_shape.step = 10;
+  },
+  
+  ensure_position: function(position, elements) {
+    if (position < 0) {
+      position = 0;
+    } else if (position >= this.width - Block.size * elements) {
+      // We have to sub line max size of blocks.
+      position = this.width - Block.size * elements;
+    }
+    return position;
   }
 });
