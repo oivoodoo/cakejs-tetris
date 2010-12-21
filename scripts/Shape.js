@@ -23,6 +23,7 @@ Shape = Klass(CanvasNode, {
   
   setup: function(options) {
     if (options != null) {
+      this.container = options.container;
       if (options.map != null) {
         this.map = options.map;
       }
@@ -106,5 +107,11 @@ Shape = Klass(CanvasNode, {
     // We are using dynamic step for encreasing step when use click to the 
     // bottom of keyboard(for example pointer to bottom or 's' key).
     this.y += this.step;
+  },
+  
+  move: function(way) {
+    if (GameContainer.LEFT == way) {
+      
+    }
   }
 });

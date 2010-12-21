@@ -11,3 +11,5 @@ vendor/rails
 *.swp
 *.swo
 config/sumbur.yml
+*.tmp
+scripts/*.tmp

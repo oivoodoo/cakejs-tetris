@@ -28,8 +28,11 @@ ScorePanel = Klass(CanvasNode, {
   
   colors: ["#FF0000", "#338000", "#005544", "#00AAD4", "#D400AA"],
 
-  initialize: function() {
+  initialize: function(parent) {
     CanvasNode.initialize.call(this);
+    
+    // Set game container as parent object for score panel.
+    this.parent = parent;
   },
   
   /*
@@ -43,7 +46,8 @@ ScorePanel = Klass(CanvasNode, {
       degree: degree, 
       color: this.get_color(),
       x: GameContainer.width / 2,
-      y: 0
+      y: 0,
+      container: this.container
     });
     return this.current_shape;
   },

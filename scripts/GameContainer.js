@@ -6,7 +6,7 @@ GameContainer = Klass(CanvasNode, {
   width: Block.size * 16,
   height: Block.size * 24,
   map: [], // Contains all placement of shape parts.
-  
+
   /*
     Key codes for game keyboard control.
   */
@@ -17,7 +17,7 @@ GameContainer = Klass(CanvasNode, {
   BOTTOM: 115,
   BEGIN: 98,
   RESTART: 114,
-  
+  ENSURE_POSITION: 999,
   
   initialize: function(canvasElem) {
     CanvasNode.initialize.call(this);
@@ -67,15 +67,12 @@ GameContainer = Klass(CanvasNode, {
   move_shape_by_keyboard: function(e) {
     var shape = this.score.current_shape;
     if (e.keyCode == this.RIGHT) {
-      shape.x = this.ensure_position(shape.x + Block.size, shape.y, 
-        shape.width, shape.height);
+      shape.move(this.RIGHT);
     } else if (e.keyCode == this.LEFT) {
-      shape.x = this.ensure_position(shape.x - Block.size, shape.y, 
-        shape.width, shape.height);
+      shape.move(this.LEFT);
     } else if (e.keyCode == this.SPACE) {
       shape.rotate();
-      shape.x = this.ensure_position(shape.x, shape.y, 
-        shape.width, shape.height);
+      shape.move(this.ENSURE_POSITION);
     } else if (e.keyCode == this.PAUSE) {
       this.pause();
     } else if (e.keyCode == this.BEGIN) {
@@ -83,7 +80,7 @@ GameContainer = Klass(CanvasNode, {
     } else if (e.keyCode == this.RESTART) {
       this.restart();      
     } else if (e.keyCode == this.BOTTOM) {
-      this.move_to_bottom();
+      shape.move(this.BOTTOM);
     }
   },
 
@@ -98,31 +95,5 @@ GameContainer = Klass(CanvasNode, {
   restart: function() {
     // TODO: implement restart methods, we have to clear game panels and
     // cleanup backup from localStorage with coordinates of game objects.
-  },
-
-  move_to_bottom: function() {
-    this.score.current_shape.step = 10;
-  },
-  
-  /*
-    Ensure position of the shape in the game container.
-  */
-  ensure_position: function(x, y, width, height) {
-    var coords = this.translate_coordinates(x, y);
-    if (coords.x >= 10) {
-      x = 14 * Block.size;
-    }
-  
-    /*if (position < 0) {
-      position = 0;
-    } else if (position >= this.width - Block.size * elements) {
-      // We have to sub line max size of blocks.
-      position = this.width - Block.size * elements;
-    }*/
-    return x;
-  },
-  
-  translate_coordinates: function(x, y) {
-    return {x: Math.floor(x / Block.size), y: Math.floor(y / Block.size)};
   }
 });

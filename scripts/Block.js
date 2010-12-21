@@ -15,7 +15,11 @@ Block = Klass(CanvasNode, {
       rx: 2,
       ry: 2
     });
-    
+
     this.append(this.shape);
-  }  
+  },
+  
+  can_move: function(way, container) {
+    // this.x 
+  }
 });
