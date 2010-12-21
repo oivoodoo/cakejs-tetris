@@ -110,8 +110,21 @@ Shape = Klass(CanvasNode, {
   },
   
   move: function(way) {
-    if (GameContainer.LEFT == way) {
-      
+    switch(way) {
+      case GameContainer.LEFT:
+        this.x -= Block.size;
+        break;
+      case GameContainer.RIGHT:
+        this.x == Block.size;
+        break;
     }
+    for(var i = 0; i < this.childNodes.length; i++) {
+      var block = this.childNodes[i];
+      var coords = this.translate_coords(block);
+    }
+  },
+  
+  translate_coords: function(block) {
+    return {i: block.x / Block.size, j: block.y / Block.size};
   }
 });
