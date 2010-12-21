@@ -107,24 +107,15 @@ Shape = Klass(CanvasNode, {
     // We are using dynamic step for encreasing step when use click to the 
     // bottom of keyboard(for example pointer to bottom or 's' key).
     this.y += this.step;
+    this.move(GameContainer.ENSURE_POSITION);
   },
   
   move: function(way) {
-    switch(way) {
-      case GameContainer.LEFT:
-        this.x -= Block.size;
-        break;
-      case GameContainer.RIGHT:
-        this.x == Block.size;
-        break;
-    }
     for(var i = 0; i < this.childNodes.length; i++) {
       var block = this.childNodes[i];
-      var coords = this.translate_coords(block);
+      if (!block.move(way)) {
+        block.revert(way);
+      }
     }
-  },
-  
-  translate_coords: function(block) {
-    return {i: block.x / Block.size, j: block.y / Block.size};
   }
 });

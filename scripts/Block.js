@@ -19,7 +19,34 @@ Block = Klass(CanvasNode, {
     this.append(this.shape);
   },
   
-  can_move: function(way, container) {
-    // this.x 
+  /*
+    We are moving blocks in separate cycle just for more flexible
+    controll of shapes.
+  */
+  move: function(way, container) {
+    switch(way) {
+      case GameContainer.LEFT:
+        this.x -= Block.size;
+        break;
+      case GameContainer.RIGHT:
+        this.x += Block.size;
+        break;
+    }
+    return true;
+  },
+  
+  revert: function(way) {
+    switch(way) {
+      case GameContainer.LEFT:
+        this.x += Block.size;
+        break;
+      case GameContainer.RIGHT:
+        this.x -= Block.size;
+        break;
+    }
+  },
+  
+  translate_coords: function() {
+    
   }
 });
