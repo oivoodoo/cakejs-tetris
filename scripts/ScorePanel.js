@@ -47,7 +47,8 @@ ScorePanel = Klass(CanvasNode, {
       color: this.get_color(),
       x: GameContainer.width / 2,
       y: 0,
-      container: this.parent
+      container: this.parent,
+      id: this.parent.shapes.length
     });
     return this.current_shape;
   },

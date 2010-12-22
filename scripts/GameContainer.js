@@ -6,6 +6,7 @@ GameContainer = Klass(CanvasNode, {
   width: Block.size * 16,
   height: Block.size * 24,
   map: [], // Contains all placement of shape parts.
+  shapes: [],
 
   /*
     Key codes for game keyboard control.
@@ -87,6 +88,7 @@ GameContainer = Klass(CanvasNode, {
     var shape = this.score.next();
     shape.addEventListener('keypress', this.move_shape);
     shape.addFrameListener(shape.update_onframe);
+    this.shapes.push(shape);
     this.append(shape);
   },
 

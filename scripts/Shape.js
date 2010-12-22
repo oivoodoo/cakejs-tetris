@@ -38,6 +38,9 @@ Shape = Klass(CanvasNode, {
       if (options.color != null) {
         this.color = options.color;
       }
+      if (options.id != null) {
+        this.id = options.id;
+      }
     }
   },
   
@@ -100,37 +103,49 @@ Shape = Klass(CanvasNode, {
   },
   
   move: function(way) {
+    var context = this;
     switch(way)
     {
       case GameContainer.LEFT:
-        if (this.check_collision(this.x - Block.size, this.y) &&
-            this.check_borders(this.x - Block.size, this.y)) {
-          this.x -= Block.size;
-        }
+        this.check_move(this.x - Block.size, this.y, false, function() {
+          context.x -= Block.size;
+        });
         break;
       case GameContainer.RIGHT:
-        if (this.check_collision(this.x + Block.size, this.y) &&
-            this.check_borders(this.x + Block.size, this.y)) {
-          this.x += Block.size;
-        }
+        this.check_move(this.x + Block.size, this.y, false, function() {
+          context.x += Block.size;
+        });
         break;
       case GameContainer.ENSURE_POSITION:
-         if (this.check_collision(this.x, this.y + this.step) &&
-             this.check_borders(this.x, this.y + this.step)) {
-            // We are using dynamic step for encreasing step when use click to the 
-            // bottom of keyboard(for example pointer to bottom or 's' key).
-            this.y += this.step;
-          } else {
-            this.container.next_shape();
-            // Stop animation for this object.
-            this.removeFrameListener(Shape.update_onframe);
-          }
+        this.check_move(this.x, this.y + this.step, true, function() {
+          // We are using dynamic step for encreasing step when use click to the 
+          // bottom of keyboard(for example pointer to bottom or 's' key).
+          context.y += context.step;
+        });
         break;
     }
   },
   
   check_collision: function(x, y) {
+    for(var i = 0; i < this.container.shapes.length; i++) {
+      var shape = this.container.shapes[i];
+      if (this.id != shape.id) {
+        
+      }
+    }
     return true;
+  },
+  
+  check_move: function(x, y, can_stop, func) {
+    if (this.check_collision(x, y) &&
+        this.check_borders(x, y)) {
+      func.call();
+    } else {
+      if (can_stop) {
+        this.removeFrameListener(Shape.update_onframe);
+        this.container.next_shape();
+      }
+    }
   },
   
   /*
