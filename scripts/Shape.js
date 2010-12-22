@@ -149,6 +149,10 @@ Shape = Klass(CanvasNode, {
     return true;
   },
   
+  /*
+    Method for checking collisions and absolute positions of the shapes
+    in the game container.
+  */
   check_move: function(context, x, y, can_stop, func) {
     if (context.check_collision(x, y) &&
         context.check_borders(x, y)) {
