@@ -44,6 +44,10 @@ Shape = Klass(CanvasNode, {
     }
   },
   
+  /*
+    On frame we have to update position of the shape, also
+    we are checking current position of the shape.
+  */
   update_onframe: function() {
     this.move(GameContainer.ENSURE_POSITION);
   },
@@ -107,17 +111,17 @@ Shape = Klass(CanvasNode, {
     switch(way)
     {
       case GameContainer.LEFT:
-        this.check_move(this.x - Block.size, this.y, false, function() {
+        this.check_move(context, this.x - Block.size, this.y, false, function() {
           context.x -= Block.size;
         });
         break;
       case GameContainer.RIGHT:
-        this.check_move(this.x + Block.size, this.y, false, function() {
+        this.check_move(context, this.x + Block.size, this.y, false, function() {
           context.x += Block.size;
         });
         break;
       case GameContainer.ENSURE_POSITION:
-        this.check_move(this.x, this.y + this.step, true, function() {
+        this.check_move(context, this.x, this.y + this.step, true, function() {
           // We are using dynamic step for encreasing step when use click to the 
           // bottom of keyboard(for example pointer to bottom or 's' key).
           context.y += context.step;
@@ -130,20 +134,29 @@ Shape = Klass(CanvasNode, {
     for(var i = 0; i < this.container.shapes.length; i++) {
       var shape = this.container.shapes[i];
       if (this.id != shape.id) {
-        
+        for(var j = 0; j < shape.childNodes.length; j++) {
+          var b1 = shape.childNodes[j];
+          for(var k = 0; k < this.childNodes.length; k++) {
+            var b2 = this.childNodes[k];
+            if (this.x + b1.x == shape.x + b2.x 
+                && this.y + b1.y == shape.y + b2.y) {
+              return false;
+            }
+          }
+        }
       }
     }
     return true;
   },
   
-  check_move: function(x, y, can_stop, func) {
-    if (this.check_collision(x, y) &&
-        this.check_borders(x, y)) {
+  check_move: function(context, x, y, can_stop, func) {
+    if (context.check_collision(x, y) &&
+        context.check_borders(x, y)) {
       func.call();
     } else {
       if (can_stop) {
-        this.removeFrameListener(Shape.update_onframe);
-        this.container.next_shape();
+        context.removeFrameListener(Shape.update_onframe);
+        context.container.next_shape();
       }
     }
   },
