@@ -42,7 +42,7 @@ Shape = Klass(CanvasNode, {
   },
   
   update_onframe: function() {
-    this.update_positions();
+    this.move(GameContainer.ENSURE_POSITION);
   },
 
   /*
@@ -53,8 +53,6 @@ Shape = Klass(CanvasNode, {
   rotate: function() {
     this.degree = this.ensure_degree(this.degree + 1);
     this.removeAllChildren();
-    this.height = this.map[this.degree][0].length;
-    this.width = this.map[this.degree].length;
     this.render_shape();
   },
   
@@ -101,15 +99,6 @@ Shape = Klass(CanvasNode, {
     }
   },
   
-  /*
-    Move shape in the each frame iteration to the bottom of the game screen.
-  */
-  update_positions: function() {
-    // We are using dynamic step for encreasing step when use click to the 
-    // bottom of keyboard(for example pointer to bottom or 's' key).
-    this.y += this.step;
-  },
-  
   move: function(way) {
     switch(way)
     {
@@ -126,7 +115,16 @@ Shape = Klass(CanvasNode, {
         }
         break;
       case GameContainer.ENSURE_POSITION:
-        
+         if (this.check_collision(this.x, this.y + this.step) &&
+             this.check_borders(this.x, this.y + this.step)) {
+            // We are using dynamic step for encreasing step when use click to the 
+            // bottom of keyboard(for example pointer to bottom or 's' key).
+            this.y += this.step;
+          } else {
+            this.container.next_shape();
+            // Stop animation for this object.
+            this.removeFrameListener(Shape.update_onframe);
+          }
         break;
     }
   },
@@ -135,6 +133,9 @@ Shape = Klass(CanvasNode, {
     return true;
   },
   
+  /*
+    Check borders for the shape (right, left and bottom borders).
+  */
   check_borders: function(x, y) {
     return !(x < 0 
       || y < 0 

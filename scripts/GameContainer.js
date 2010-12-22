@@ -10,14 +10,14 @@ GameContainer = Klass(CanvasNode, {
   /*
     Key codes for game keyboard control.
   */
-  RIGHT: 100,
-  LEFT: 97,
-  PAUSE: 112,
-  SPACE: 32,
-  BOTTOM: 115,
-  BEGIN: 98,
-  RESTART: 114,
-  ENSURE_POSITION: 999,
+  RIGHT: 100,     // 'D'
+  LEFT: 97,       // 'A'
+  PAUSE: 112,     // 'P'
+  SPACE: 32,      // ' '
+  BOTTOM: 115,    // 'S'
+  BEGIN: 98,      // 'B'
+  RESTART: 114,   // 'R'
+  ENSURE_POSITION: 999, // just ensure position
   
   initialize: function(canvasElem) {
     CanvasNode.initialize.call(this);
@@ -43,12 +43,6 @@ GameContainer = Klass(CanvasNode, {
     // Score panel also contains preview for the game object
     // and scores what use have got.
     this.append(this.score);
-    for(var i = 0; i < 1; i++) {
-      var shape = this.score.next();
-      shape.addEventListener('keypress', this.move_shape);
-      shape.addFrameListener(shape.update_onframe);
-      this.append(shape);
-    }
     
     this.addEventListener('keypress', this.move_shape_by_keyboard);
   },
@@ -66,26 +60,38 @@ GameContainer = Klass(CanvasNode, {
   
   move_shape_by_keyboard: function(e) {
     var shape = this.score.current_shape;
-    if (e.keyCode == this.RIGHT) {
-      shape.move(this.RIGHT);
-    } else if (e.keyCode == this.LEFT) {
-      shape.move(this.LEFT);
-    } else if (e.keyCode == this.SPACE) {
-      shape.rotate();
-      shape.move(this.ENSURE_POSITION);
-    } else if (e.keyCode == this.PAUSE) {
+    // Shape controls.
+    if (shape != null) {
+      if (e.keyCode == this.RIGHT) {
+        shape.move(this.RIGHT);
+      } else if (e.keyCode == this.LEFT) {
+        shape.move(this.LEFT);
+      } else if (e.keyCode == this.SPACE) {
+        shape.rotate();
+        shape.move(this.ENSURE_POSITION);
+      } else if (e.keyCode == this.BOTTOM) {
+        shape.move(this.BOTTOM);
+      }
+    }
+    // Common game controls.
+    if (e.keyCode == this.PAUSE) {
       this.pause();
     } else if (e.keyCode == this.BEGIN) {
       this.start();
     } else if (e.keyCode == this.RESTART) {
       this.restart();      
-    } else if (e.keyCode == this.BOTTOM) {
-      shape.move(this.BOTTOM);
-    }
+    } 
+  },
+  
+  next_shape: function() {
+    var shape = this.score.next();
+    shape.addEventListener('keypress', this.move_shape);
+    shape.addFrameListener(shape.update_onframe);
+    this.append(shape);
   },
 
   start: function() {
-    this.score.current_shape.addFrameListener(Shape.update_onframe);  
+    this.next_shape();
   },
 
   pause: function() {
