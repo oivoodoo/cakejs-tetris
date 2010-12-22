@@ -3,6 +3,7 @@ Shape = Klass(CanvasNode, {
   map: [],
   step: 1,
   blocks: [],
+  MAX_STEP: 5,
   
   initialize: function(options) {
     CanvasNode.initialize.call(this);
@@ -120,6 +121,9 @@ Shape = Klass(CanvasNode, {
           context.x += Block.size;
         });
         break;
+      case GameContainer.BOTTOM:
+        this.step = this.MAX_STEP;
+        break;
       case GameContainer.ENSURE_POSITION:
         this.check_move(context, this.x, this.y + this.step, true, function() {
           // We are using dynamic step for encreasing step when use click to the 
@@ -130,6 +134,10 @@ Shape = Klass(CanvasNode, {
     }
   },
   
+  /*
+    Check collisions near with another shapes comparing with current selected
+    shape.
+  */
   check_collision: function(x, y) {
     for(var i = 0; i < this.container.shapes.length; i++) {
       var shape = this.container.shapes[i];
@@ -138,8 +146,8 @@ Shape = Klass(CanvasNode, {
           var b1 = shape.childNodes[j];
           for(var k = 0; k < this.childNodes.length; k++) {
             var b2 = this.childNodes[k];
-            if (this.x + b1.x == shape.x + b2.x 
-                && this.y + b1.y == shape.y + b2.y) {
+            if (Math.abs(x + b2.x - shape.x - b1.x) <= Block.size 
+                && Math.abs(y + b2.y - shape.y - b1.y) <= Block.size) {
               return false;
             }
           }
