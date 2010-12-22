@@ -1,4 +1,5 @@
 Shape = Klass(CanvasNode, {
+  degree: 0,
   map: [],
   step: 1,
   blocks: [],
@@ -110,6 +111,48 @@ Shape = Klass(CanvasNode, {
   },
   
   move: function(way) {
-    
+    switch(way)
+    {
+      case GameContainer.LEFT:
+        if (this.check_collision(this.x - Block.size, this.y) &&
+            this.check_borders(this.x - Block.size, this.y)) {
+          this.x -= Block.size;
+        }
+        break;
+      case GameContainer.RIGHT:
+        if (this.check_collision(this.x + Block.size, this.y) &&
+            this.check_borders(this.x + Block.size, this.y)) {
+          this.x += Block.size;
+        }
+        break;
+      case GameContainer.ENSURE_POSITION:
+        
+        break;
+    }
+  },
+  
+  check_collision: function(x, y) {
+    return true;
+  },
+  
+  check_borders: function(x, y) {
+    return !(x < 0 
+      || y < 0 
+      || (x + this.width() > GameContainer.width)
+      || (y + this.height() > GameContainer.height));
+  },
+  
+  /*
+    Return max width of the shape just for determine borders.
+  */
+  width: function() {
+    return this.map[this.degree][0].length * Block.size;
+  },
+  
+  /*
+    Return max height of the shape just for determine borders.
+  */
+  height: function() {
+    return this.map[this.degree].length * Block.size;
   }
 });

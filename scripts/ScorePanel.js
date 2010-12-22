@@ -49,7 +49,6 @@ ScorePanel = Klass(CanvasNode, {
       y: 0,
       container: this.container
     });
-    var coords = Utils.translate_coords(this.current_shape);
     return this.current_shape;
   },
   
