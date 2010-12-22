@@ -1,9 +1,7 @@
 Shape = Klass(CanvasNode, {
   map: [],
-  degree: 0,
-  rotations: 4,
-  default_angle: Math.PI / 2,
   step: 1,
+  blocks: [],
   
   initialize: function(options) {
     CanvasNode.initialize.call(this);
@@ -89,11 +87,13 @@ Shape = Klass(CanvasNode, {
       for(var i = 0; i < this.map[this.degree].length; i++) {
         for(var j = 0; j < this.map[this.degree][i].length; j++) {
           if (this.map[this.degree][i][j] == 1) {        
-            this.append(new Block({
+            var block = new Block({
               x: j * Block.size, 
               y: i * Block.size,
               color: this.color
-            }));
+            });
+            this.blocks.push(block);
+            this.append(block);
           }
         }
       }
@@ -107,15 +107,9 @@ Shape = Klass(CanvasNode, {
     // We are using dynamic step for encreasing step when use click to the 
     // bottom of keyboard(for example pointer to bottom or 's' key).
     this.y += this.step;
-    this.move(GameContainer.ENSURE_POSITION);
   },
   
   move: function(way) {
-    for(var i = 0; i < this.childNodes.length; i++) {
-      var block = this.childNodes[i];
-      if (!block.move(way)) {
-        block.revert(way);
-      }
-    }
+    
   }
 });
