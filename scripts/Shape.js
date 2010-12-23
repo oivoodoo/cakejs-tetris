@@ -146,8 +146,8 @@ Shape = Klass(CanvasNode, {
           var b1 = shape.childNodes[j];
           for(var k = 0; k < this.childNodes.length; k++) {
             var b2 = this.childNodes[k];
-            if (Math.abs(x + b2.x - shape.x - b1.x) <= Block.size 
-                && Math.abs(y + b2.y - shape.y - b1.y) <= Block.size) {
+            if (Math.ceil((x + b2.x) / Block.size) == Math.ceil((shape.x + b1.x) / Block.size)
+                && Math.ceil((y + b2.y) / Block.size) == Math.ceil((shape.y + b1.y) / Block.size)) {
               return false;
             }
           }
