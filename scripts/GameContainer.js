@@ -91,6 +91,19 @@ GameContainer = Klass(CanvasNode, {
     this.shapes.push(shape);
     this.append(shape);
   },
+  
+  check_rows: function() {
+    for(var i = 0; i < this.map.length; i++) {
+      for(var j = 0; j < this.map[i].length; j++) {
+        if (this.map[i][j] != 1) {
+          break;
+        }
+      }
+      if (i == this.map[i].length) {
+        // TODO: remove line;
+      }
+    }
+  },
 
   start: function() {
     this.next_shape();
