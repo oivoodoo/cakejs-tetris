@@ -164,8 +164,8 @@ Shape = Klass(CanvasNode, {
     in the game container.
   */
   check_move: function(context, x, y, can_stop, func) {
-    if (context.check_collision(x, y) &&
-        context.check_borders(x, y)) {
+    if (context.check_borders(x, y)
+        && context.check_collision(x, y)) {
       func.call();
     } else {
       if (can_stop) {
@@ -177,6 +177,10 @@ Shape = Klass(CanvasNode, {
           );
           context.container.map[c.x][c.y] = 1;
         }
+        // If we are using speed up control we have ceil coordinates.
+        var c = context.get_coords(context.x, context.y);
+        context.x = c.x * Block.size; // 0..nwidth - 1
+        context.y = (c.y + 1) * Block.size; // 0..nheight - 1
         context.removeFrameListener(Shape.update_onframe);
         context.container.next_shape();
       }
