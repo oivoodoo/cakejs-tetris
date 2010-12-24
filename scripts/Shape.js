@@ -136,25 +136,24 @@ Shape = Klass(CanvasNode, {
   
   /*
     Check collisions near with another shapes comparing with current selected
-    shape.
+    shape. Also this method update map that's contains all information about 
+    shapes in the game container.
   */
   check_collision: function(x, y) {
-    for(var i = 0; i < this.container.shapes.length; i++) {
-      var shape = this.container.shapes[i];
-      if (this.id != shape.id) {
-        for(var j = 0; j < shape.childNodes.length; j++) {
-          var b1 = shape.childNodes[j];
-          for(var k = 0; k < this.childNodes.length; k++) {
-            var b2 = this.childNodes[k];
-            if (Math.ceil((x + b2.x) / Block.size) == Math.ceil((shape.x + b1.x) / Block.size)
-                && Math.ceil((y + b2.y) / Block.size) == Math.ceil((shape.y + b1.y) / Block.size)) {
-              return false;
-            }
-          }
-        }
+    for(var i = 0; i < this.childNodes.length; i++) {
+      var c = this.get_coords(x + this.childNodes[i].x, y + this.childNodes[i].y);
+      if (this.container.map[c.x][c.y] == 1) {
+        return false;
       }
     }
     return true;
+  },
+  
+  get_coords: function(x, y) {
+    return {
+      x: Math.floor(x / Block.size), 
+      y: Math.floor(y / Block.size)
+    };
   },
   
   /*
@@ -167,6 +166,14 @@ Shape = Klass(CanvasNode, {
       func.call();
     } else {
       if (can_stop) {
+        // We have to update map this current position of the shape.
+        for(var i = 0; i < context.childNodes.length; i++) {
+          var c = context.get_coords(
+            context.x + context.childNodes[i].x, 
+            context.y + context.childNodes[i].y
+          );
+          context.container.map[c.x][c.y] = 1;
+        }
         context.removeFrameListener(Shape.update_onframe);
         context.container.next_shape();
       }

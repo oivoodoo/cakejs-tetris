@@ -1,0 +1,1 @@
+var html = ''; for(var i = 0 ; i < this.container.map.length; i++) { html += '\n'; for(var j = 0; j < this.container.map[i].length; j++) { html+=this.container.map[i][j]; }} console.log(html);

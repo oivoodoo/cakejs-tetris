@@ -23,6 +23,8 @@ GameContainer = Klass(CanvasNode, {
   initialize: function(canvasElem) {
     CanvasNode.initialize.call(this);
     
+    this.setup();
+    
     this.canvas = new Canvas(canvasElem);
     this.canvas.frameDuration = 30;
     this.canvas.append(this);
