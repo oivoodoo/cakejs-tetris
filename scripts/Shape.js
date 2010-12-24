@@ -107,6 +107,9 @@ Shape = Klass(CanvasNode, {
     }
   },
   
+  /*
+    Move the shape by certain way.
+  */
   move: function(way) {
     var context = this;
     switch(way)

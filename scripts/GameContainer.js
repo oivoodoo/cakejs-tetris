@@ -53,9 +53,9 @@ GameContainer = Klass(CanvasNode, {
   setup: function() {
     // Initialize map of the game container with 0, it means we haven't
     // any blocks in the game container.
-    for(var i = 0; i < 16; i++) {
+    for(var i = 0; i < this.nwidth; i++) {
       this.map.push([]);
-      for(var j = 0; j < 24; j++) {
+      for(var j = 0; j < this.nheight; j++) {
         this.map[i].push(0);
       }
     }
