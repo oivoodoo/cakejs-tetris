@@ -79,8 +79,10 @@ Shape = Klass(CanvasNode, {
     to rotations.
   */
   ensure_degree: function(degree) {
-    if (degree >= this.map.length) {
+    if (degree >= this.map.length || degree < 0) {
       degree = 0;
+    } else if (degree < 0) {
+      
     }
     return degree;
   },
@@ -134,6 +136,14 @@ Shape = Klass(CanvasNode, {
           context.y += context.step;
         });
         break;
+      case GameContainer.SPACE:
+        var degree = this.degree;
+        this.rotate();
+        this.check_move(context, this.x, this.y, false, null, function() {
+          context.degree = degree - 1;
+          context.rotate();
+        });
+        break; 
     }
   },
   
@@ -145,7 +155,7 @@ Shape = Klass(CanvasNode, {
   check_collision: function(x, y) {
     for(var i = 0; i < this.childNodes.length; i++) {
       var c = this.get_coords(x + this.childNodes[i].x, y + this.childNodes[i].y);
-      if (this.container.map[c.x][c.y] == 1) {
+      if (this.container.map[c.x][c.y].id > 0) {
         return false;
       }
     }
@@ -155,7 +165,7 @@ Shape = Klass(CanvasNode, {
   get_coords: function(x, y) {
     return {
       x: Math.floor(x / Block.size), 
-      y: Math.floor(y / Block.size)
+      y: Math.floor(y / Block.size) + 1
     };
   },
   
@@ -163,10 +173,12 @@ Shape = Klass(CanvasNode, {
     Method for checking collisions and absolute positions of the shapes
     in the game container.
   */
-  check_move: function(context, x, y, can_stop, func) {
+  check_move: function(context, x, y, can_stop, func, fail) {
     if (context.check_borders(x, y)
         && context.check_collision(x, y)) {
-      func.call();
+      if (func != null) {
+        func.call();
+      }
     } else {
       if (can_stop) {
         // We have to update map this current position of the shape.
@@ -175,14 +187,22 @@ Shape = Klass(CanvasNode, {
             context.x + context.childNodes[i].x, 
             context.y + context.childNodes[i].y
           );
-          context.container.map[c.x][c.y] = 1;
+          context.container.map[c.x][c.y] = {
+            id: context.id, 
+            position: i, 
+            shape: context  
+          };
         }
         // If we are using speed up control we have ceil coordinates.
         var c = context.get_coords(context.x, context.y);
         context.x = c.x * Block.size; // 0..nwidth - 1
-        context.y = (c.y + 1) * Block.size; // 0..nheight - 1
+        context.y = c.y * Block.size; // 0..nheight - 1
         context.removeFrameListener(Shape.update_onframe);
         context.container.next_shape();
+      } else {
+        if (fail != null) {
+          fail.call();
+        }
       }
     }
   },

@@ -26,7 +26,7 @@ GameContainer = Klass(CanvasNode, {
     this.setup();
     
     this.canvas = new Canvas(canvasElem);
-    this.canvas.frameDuration = 30;
+    this.canvas.frameDuration = 40;
     this.canvas.append(this);
     
     // Draw container where we will place shape objects.
@@ -47,6 +47,8 @@ GameContainer = Klass(CanvasNode, {
     // and scores what use have got.
     this.append(this.score);
     
+    this.addFrameListener(this.check_rows);
+    
     this.addEventListener('keypress', this.move_shape_by_keyboard);
   },
   
@@ -56,7 +58,7 @@ GameContainer = Klass(CanvasNode, {
     for(var i = 0; i < this.nwidth; i++) {
       this.map.push([]);
       for(var j = 0; j < this.nheight; j++) {
-        this.map[i].push(0);
+        this.map[i].push({id: 0, position: 0, shape: null});
       }
     }
   },
@@ -70,8 +72,7 @@ GameContainer = Klass(CanvasNode, {
       } else if (e.keyCode == this.LEFT) {
         shape.move(this.LEFT);
       } else if (e.keyCode == this.SPACE) {
-        shape.rotate();
-        shape.move(this.ENSURE_POSITION);
+        shape.move(this.SPACE);
       } else if (e.keyCode == this.BOTTOM) {
         shape.move(this.BOTTOM);
       }
@@ -95,14 +96,18 @@ GameContainer = Klass(CanvasNode, {
   },
   
   check_rows: function() {
-    for(var i = 0; i < this.map.length; i++) {
-      for(var j = 0; j < this.map[i].length; j++) {
-        if (this.map[i][j] != 1) {
-          break;
+    var i, j, k;
+    for(i = this.nheight - 1; i >= 0 ; i--) {
+      var count = 0;
+      for(j = this.nwidth - 1; j >= 0; j--) {
+        if (this.map[j][i].id > 0) {
+          count++;
         }
       }
-      if (i == this.map[i].length) {
-        // TODO: remove line;
+      if (count == this.nwidth) {
+        for(k = 0; k < this.nwidth; k++) {
+          this.map[i][k].shape.childNodes[this.map[i][k].position].removeSelf();
+        }
       }
     }
   },
