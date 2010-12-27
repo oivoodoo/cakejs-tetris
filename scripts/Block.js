@@ -19,5 +19,9 @@ Block = Klass(CanvasNode, {
     this.y = options.y;
 
     this.append(this.shape);
+  },
+  
+  set_map: function(map) {
+    this.map = map;
   }
 });

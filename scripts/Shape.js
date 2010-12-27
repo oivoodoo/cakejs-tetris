@@ -167,8 +167,8 @@ Shape = Klass(CanvasNode, {
   
   get_coords: function(x, y) {
     return {
-      x: Math.floor(x / Block.size), 
-      y: Math.floor(y / Block.size)
+      x: Math.ceil(x / Block.size), 
+      y: Math.ceil(y / Block.size)
     };
   },
   
@@ -195,8 +195,7 @@ Shape = Klass(CanvasNode, {
             position: i, 
             shape: context
           };
-          context.childNodes.map.x = c.x;
-          context.childNodes.map.y = c.y;
+          context.childNodes[i].set_map({x: c.x, y: c.y});
         }
         // If we are using speed up control we have ceil coordinates.
         var c = context.get_coords(context.x, context.y);
