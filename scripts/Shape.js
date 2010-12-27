@@ -143,7 +143,10 @@ Shape = Klass(CanvasNode, {
           context.degree = degree - 1;
           context.rotate();
         });
-        break; 
+        break;
+      case GameContainer.BOTTOM_BLOCK:
+        this.y += Block.size;
+        break;
     }
   },
   
@@ -165,7 +168,7 @@ Shape = Klass(CanvasNode, {
   get_coords: function(x, y) {
     return {
       x: Math.floor(x / Block.size), 
-      y: Math.floor(y / Block.size) + 1
+      y: Math.floor(y / Block.size)
     };
   },
   
@@ -190,8 +193,10 @@ Shape = Klass(CanvasNode, {
           context.container.map[c.x][c.y] = {
             id: context.id, 
             position: i, 
-            shape: context  
+            shape: context
           };
+          context.childNodes.map.x = c.x;
+          context.childNodes.map.y = c.y;
         }
         // If we are using speed up control we have ceil coordinates.
         var c = context.get_coords(context.x, context.y);
@@ -215,6 +220,26 @@ Shape = Klass(CanvasNode, {
       || y < 0 
       || (x + this.width() > GameContainer.width)
       || (y + this.height() > GameContainer.height));
+  },
+  
+  /*
+    Remove block from game container and update positions for another blocks.
+  */
+  remove_block: function(conf) {
+    var block = this.childNodes[conf.position];
+    this.container.map[block.map.x][block.map.y] = {id: 0};
+    this.childNodes[conf.position].removeSelf();
+    if (this.childNodes.length != 0) {
+      for(var i = 0; i < this.childNodes.length; i++) {
+        var b = this.childNodes[i];
+        this.container.map[b.map.x][b.map.y].position -= 1;
+      }
+    } else {
+      // Clear all references for this selected shape.
+      // if we have removed all blocks before.
+      this.container.shapes.remove(this);
+      this.removeSelf();
+    }
   },
   
   /*

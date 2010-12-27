@@ -18,6 +18,7 @@ GameContainer = Klass(CanvasNode, {
   BOTTOM: 115,    // 'S'
   BEGIN: 98,      // 'B'
   RESTART: 114,   // 'R'
+  BOTTOM_BLOCK: 998,    // move shape to the bottom with Block.size step
   ENSURE_POSITION: 999, // just ensure position
   
   initialize: function(canvasElem) {
@@ -97,6 +98,7 @@ GameContainer = Klass(CanvasNode, {
   
   check_rows: function() {
     var i, j, k;
+    var rows = 0;
     for(i = this.nheight - 1; i >= 0 ; i--) {
       var count = 0;
       for(j = this.nwidth - 1; j >= 0; j--) {
@@ -106,9 +108,15 @@ GameContainer = Klass(CanvasNode, {
       }
       if (count == this.nwidth) {
         for(k = 0; k < this.nwidth; k++) {
-          this.map[i][k].shape.childNodes[this.map[i][k].position].removeSelf();
+          this.map[k][i].shape.remove_block(this.map[k][i]);
         }
+        rows++;
       }
+    }
+    // We have to move rows to bottom if we remove some rows
+    // after detection 'boom'!!! :)
+    for(var i = 0; i < rows; i++) {
+      this.shapes.move(this.BOTTOM_BLOCK);
     }
   },
 

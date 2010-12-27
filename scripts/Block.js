@@ -2,6 +2,7 @@ Block = Klass(CanvasNode, {
   backgroud: 'rgb(0, 0, 0)',
   opacity: 0.8,
   size: 20,
+  map: {x: 0, y: 0},
   
   initialize: function(options) {
     CanvasNode.initialize.call(this);
