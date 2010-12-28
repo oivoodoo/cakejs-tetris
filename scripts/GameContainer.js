@@ -7,6 +7,8 @@ GameContainer = Klass(CanvasNode, {
   height: Block.size * 24,
   map: [], // Contains all placement of shape parts.
   shapes: [],
+  
+  SCORE_STEP: 100,
 
   /*
     Key codes for game keyboard control.
@@ -118,6 +120,7 @@ GameContainer = Klass(CanvasNode, {
     for(var i = 0; i < rows; i++) {
       this.shapes.move(this.BOTTOM_BLOCK);
     }
+    this.score.scores += rows * this.SCORE_STEP;
   },
 
   start: function() {

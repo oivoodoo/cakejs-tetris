@@ -1,5 +1,6 @@
 ScorePanel = Klass(CanvasNode, {
 
+  scores: 0,
   shapes: [
     {map: [[[1,1],[1,1]]]},
     {map: [[[1,1],
