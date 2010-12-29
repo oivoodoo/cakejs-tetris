@@ -205,6 +205,7 @@ Shape = Klass(CanvasNode, {
         context.y = c.x * Block.size; // 0..nheight - 1
         context.removeFrameListener(Shape.update_onframe);
         context.container.next_shape();
+        context.container.check_rows();
       } else {
         if (fail != null) {
           fail.call();

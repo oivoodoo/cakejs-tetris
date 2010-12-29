@@ -48,9 +48,7 @@ GameContainer = Klass(CanvasNode, {
     // This panel will generate next shape and preview it.
     // Score panel also contains preview for the game object
     // and scores what use have got.
-    this.append(this.score);
-    
-    this.addFrameListener(this.check_rows);
+    this.append(this.score);    
     
     this.addEventListener('keypress', this.move_shape_by_keyboard);
   },
