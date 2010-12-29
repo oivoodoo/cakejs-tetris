@@ -121,7 +121,7 @@ GameContainer = Klass(CanvasNode, {
       }
       this.map.remove(this.map[this.map.length - 1]);
       this.map.unshift([]);
-      for(var j = 0; j < this.nwidth; j++) {
+      for(var z = 0; z < this.nwidth; z++) {
         this.map[0].push({id: 0, position: 0, shape: null});
       }
     }

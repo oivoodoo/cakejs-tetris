@@ -234,12 +234,13 @@ Shape = Klass(CanvasNode, {
     if (this.childNodes.length != 0) {
       for(var i = 0; i < this.childNodes.length; i++) {
         var b = this.childNodes[i];
-        this.container.map[b.map.x][b.map.y].position -= 1;
+        if (this.container.map[b.map.x][b.map.y].position > 0) {
+          this.container.map[b.map.x][b.map.y].position -= 1;  
+        }
       }
     } else {
       // Clear all references for this selected shape.
       // if we have removed all blocks before.
-      this.container.shapes.remove(this);
       this.removeSelf();
     }
   },
