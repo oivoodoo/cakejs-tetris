@@ -58,9 +58,9 @@ GameContainer = Klass(CanvasNode, {
   setup: function() {
     // Initialize map of the game container with 0, it means we haven't
     // any blocks in the game container.
-    for(var i = 0; i < this.nwidth; i++) {
+    for(var i = 0; i < this.nheight; i++) {
       this.map.push([]);
-      for(var j = 0; j < this.nheight; j++) {
+      for(var j = 0; j < this.nwidth; j++) {
         this.map[i].push({id: 0, position: 0, shape: null});
       }
     }
@@ -104,13 +104,13 @@ GameContainer = Klass(CanvasNode, {
     for(i = this.nheight - 1; i >= 0 ; i--) {
       var count = 0;
       for(j = this.nwidth - 1; j >= 0; j--) {
-        if (this.map[j][i].id > 0) {
+        if (this.map[i][j].id > 0) {
           count++;
         }
       }
       if (count == this.nwidth) {
         for(k = 0; k < this.nwidth; k++) {
-          this.map[k][i].shape.remove_block(this.map[k][i]);
+          this.map[i][k].shape.remove_block(this.map[i][k]);
         }
         rows++;
       }
@@ -121,9 +121,9 @@ GameContainer = Klass(CanvasNode, {
       for(var i = 0; i < this.shapes.length; i++) {
         this.shapes[i].move(this.BOTTOM_BLOCK);
       }
-      this.map.remove(this.map[0]);
+      this.map.remove(this.map[this.map.length - 1]);
       this.map.unshift([]);
-      for(var j = 0; j < this.nheight; j++) {
+      for(var j = 0; j < this.nwidth; j++) {
         this.map[0].push({id: 0, position: 0, shape: null});
       }
     }

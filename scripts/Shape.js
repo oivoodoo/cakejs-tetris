@@ -81,8 +81,6 @@ Shape = Klass(CanvasNode, {
   ensure_degree: function(degree) {
     if (degree >= this.map.length || degree < 0) {
       degree = 0;
-    } else if (degree < 0) {
-      
     }
     return degree;
   },
@@ -165,7 +163,11 @@ Shape = Klass(CanvasNode, {
     return true;
   },
   
-  get_coords: function(x, y) {
+  /*
+    x ~> height
+    y ~> width
+  */
+  get_coords: function(y, x) {
     return {
       x: Math.ceil(x / Block.size), 
       y: Math.ceil(y / Block.size)
@@ -199,8 +201,8 @@ Shape = Klass(CanvasNode, {
         }
         // If we are using speed up control we have ceil coordinates.
         var c = context.get_coords(context.x, context.y);
-        context.x = c.x * Block.size; // 0..nwidth - 1
-        context.y = c.y * Block.size; // 0..nheight - 1
+        context.x = c.y * Block.size; // 0..nwidth - 1
+        context.y = c.x * Block.size; // 0..nheight - 1
         context.removeFrameListener(Shape.update_onframe);
         context.container.next_shape();
       } else {
