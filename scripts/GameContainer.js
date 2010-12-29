@@ -141,5 +141,11 @@ GameContainer = Klass(CanvasNode, {
   restart: function() {
     // TODO: implement restart methods, we have to clear game panels and
     // cleanup backup from localStorage with coordinates of game objects.
+  },
+  
+  gameover: function() {
+    // if current shapes is moved to the game container
+    // TODO: we have to show message with gameover window.
+    // TODO: send high scores to the server with scores, developed by rails.
   }
 });
