@@ -3,7 +3,7 @@ Shape = Klass(CanvasNode, {
   map: [],
   step: 1,
   blocks: [],
-  MAX_STEP: 5,
+  MAX_STEP: 15,
   
   initialize: function(options) {
     CanvasNode.initialize.call(this);
@@ -110,7 +110,7 @@ Shape = Klass(CanvasNode, {
   /*
     Move the shape by certain way.
   */
-  move: function(way) {
+  move: function(way, options) {
     var context = this;
     switch(way)
     {
@@ -143,7 +143,11 @@ Shape = Klass(CanvasNode, {
         });
         break;
       case GameContainer.BOTTOM_BLOCK:
-        this.y += Block.size;
+        var count = 1;
+        if (typeof(options) !== "undefined") {
+          count = options.count;
+        }
+        this.y += Block.size * count;
         break;
     }
   },
@@ -232,7 +236,7 @@ Shape = Klass(CanvasNode, {
     this.container.map[block.map.x][block.map.y] = {id: 0};
     this.childNodes[conf.position].removeSelf();
     if (this.childNodes.length != 0) {
-      for(var i = 0; i < this.childNodes.length; i++) {
+      for(var i = conf.position; i < this.childNodes.length; i++) {
         var b = this.childNodes[i];
         if (this.container.map[b.map.x][b.map.y].position > 0) {
           this.container.map[b.map.x][b.map.y].position -= 1;  
@@ -242,7 +246,8 @@ Shape = Klass(CanvasNode, {
       // Clear all references for this selected shape.
       // if we have removed all blocks before.
       this.removeSelf();
-    }
+      this.container.shapes.remove(this);
+    }    
   },
   
   /*

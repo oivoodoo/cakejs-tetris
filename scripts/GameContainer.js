@@ -98,10 +98,10 @@ GameContainer = Klass(CanvasNode, {
   
   check_rows: function() {
     var i, j, k;
-    var rows = 0;
-    for(i = this.nheight - 1; i >= 0 ; i--) {
+    var rows = [];
+    for(i = 0; i < this.nheight ; i++) {
       var count = 0;
-      for(j = this.nwidth - 1; j >= 0; j--) {
+      for(j = 0; j < this.nwidth; j++) {
         if (this.map[i][j].id > 0) {
           count++;
         }
@@ -110,21 +110,38 @@ GameContainer = Klass(CanvasNode, {
         for(k = 0; k < this.nwidth; k++) {
           this.map[i][k].shape.remove_block(this.map[i][k]);
         }
-        rows++;
+        rows.push({p: i, c: this.map[i]});
       }
     }
+    
     // We have to move rows to bottom if we remove some rows
     // after detection 'boom'!!! :)
-    for(var j = 0; j < rows; j++) {
-      for(var i = 0; i < this.shapes.length; i++) {
-        this.shapes[i].move(this.BOTTOM_BLOCK);
-      }
-      this.map.remove(this.map[this.map.length - 1]);
-      this.map.unshift([]);
-      for(var z = 0; z < this.nwidth; z++) {
-        this.map[0].push({id: 0, position: 0, shape: null});
+    for(var j = 0; j < rows.length; j++) {
+      for(var z = 0; z < this.shapes.length; z++) {
+        var shape = this.shapes[z];
+        for(var p = 0; p < shape.childNodes.length; p++) {
+          var b = shape.childNodes[p];
+          if (b.map.x < this.nheight 
+              && (this.map[b.map.x + 1][b.map.y].id == 0
+              || this.map[b.map.x + 1][b.map.y].id == shape.id)) {
+            b.y += Block.size;     
+          }   
+          if (b.map.x + 1 == rows[j].p) {
+            b.map.x += 1;
+          }
+        }
       }
     }
+    
+    for(var j = 0; j < rows.length; j++) {
+      this.map.remove(rows[j].c);
+      this.map.unshift([]);
+      for(var z = 0; z < this.nwidth; z++) {
+        this.map[0].push({id: 0});
+      }
+    }
+    
+    // Update scores
     this.score.scores += rows * this.SCORE_STEP;
   },
 
