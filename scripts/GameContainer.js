@@ -116,18 +116,21 @@ GameContainer = Klass(CanvasNode, {
     
     // We have to move rows to bottom if we remove some rows
     // after detection 'boom'!!! :)
-    for(var j = 0; j < rows.length; j++) {
+    if (rows.length > 0) {
       for(var z = 0; z < this.shapes.length; z++) {
         var shape = this.shapes[z];
         for(var p = 0; p < shape.childNodes.length; p++) {
           var b = shape.childNodes[p];
           if (b.map.x < this.nheight 
               && (this.map[b.map.x + 1][b.map.y].id == 0
-              || this.map[b.map.x + 1][b.map.y].id == shape.id)) {
+                  || this.map[b.map.x + 1][b.map.y].id == shape.id)) {
             b.y += Block.size;     
           }   
-          if (b.map.x + 1 == rows[j].p) {
-            b.map.x += 1;
+          for(var j = 0; j < rows.length; j++) {
+            if (b.map.x + 1 == rows[j].p) {
+              b.map.x += 1;
+              break;
+            }
           }
         }
       }
