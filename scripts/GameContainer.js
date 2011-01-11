@@ -119,16 +119,18 @@ GameContainer = Klass(CanvasNode, {
     if (rows.length > 0) {
       for(var z = 0; z < this.shapes.length; z++) {
         var shape = this.shapes[z];
-        for(var p = 0; p < shape.childNodes.length; p++) {
-          var b = shape.childNodes[p];
-          if (b.map.x < this.nheight 
-              && (this.map[b.map.x + 1][b.map.y].id == 0
-                  || this.map[b.map.x + 1][b.map.y].id == shape.id)) {
-            b.y += Block.size;     
+        for(var p = 0; p < shape.childNodes.length; p++) { 
+          if (shape.childNodes[p].map.x < this.nheight 
+              && (this.map[shape.childNodes[p].map.x + 1][shape.childNodes[p].map.y].id == 0
+                  || this.map[shape.childNodes[p].map.x + 1][shape.childNodes[p].map.y].id == shape.id)) {
+            shape.childNodes[p].y += Block.size;     
           }   
           for(var j = 0; j < rows.length; j++) {
-            if (b.map.x + 1 == rows[j].p) {
-              b.map.x += 1;
+            if (shape.childNodes[p].map.x + 1 == rows[j].p) {
+              shape.childNodes[p].set_map({
+					x: shape.childNodes[p].map.x + 1, 
+				  	y: shape.childNodes[p].map.y
+			  });
               break;
             }
           }
