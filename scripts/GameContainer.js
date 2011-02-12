@@ -48,7 +48,7 @@ GameContainer = Klass(CanvasNode, {
     // This panel will generate next shape and preview it.
     // Score panel also contains preview for the game object
     // and scores what use have got.
-    this.append(this.score);    
+    this.append(this.score);
     
     this.addEventListener('keypress', this.move_shape_by_keyboard);
   },
@@ -84,7 +84,7 @@ GameContainer = Klass(CanvasNode, {
     } else if (e.keyCode == this.BEGIN) {
       this.start();
     } else if (e.keyCode == this.RESTART) {
-      this.restart();      
+      this.restart();
     } 
   },
   
@@ -95,7 +95,7 @@ GameContainer = Klass(CanvasNode, {
     this.shapes.push(shape);
     this.append(shape);
   },
-  
+
   check_rows: function() {
     var i, j, k;
     var rows = [];
@@ -113,31 +113,21 @@ GameContainer = Klass(CanvasNode, {
         rows.push({p: i, c: this.map[i]});
       }
     }
-    
+
     // We have to move rows to bottom if we remove some rows
     // after detection 'boom'!!! :)
-    if (rows.length > 0) {
+    /*if (rows.length > 0) {
       for(var z = 0; z < this.shapes.length; z++) {
         var shape = this.shapes[z];
         for(var p = 0; p < shape.childNodes.length; p++) { 
-          if (shape.childNodes[p].map.x < this.nheight 
-              && (this.map[shape.childNodes[p].map.x + 1][shape.childNodes[p].map.y].id == 0
-                  || this.map[shape.childNodes[p].map.x + 1][shape.childNodes[p].map.y].id == shape.id)) {
-            shape.childNodes[p].y += Block.size;     
-          }   
-          for(var j = 0; j < rows.length; j++) {
-            if (shape.childNodes[p].map.x + 1 == rows[j].p) {
-              shape.childNodes[p].set_map({
-					x: shape.childNodes[p].map.x + 1, 
-				  	y: shape.childNodes[p].map.y
-			  });
-              break;
-            }
-          }
+          shape.childNodes[p].set_map({
+            x: shape.childNodes[p].map.x + rows.length, 
+            y: shape.childNodes[p].map.y
+          });
         }
       }
-    }
-    
+    }*/
+
     for(var j = 0; j < rows.length; j++) {
       this.map.remove(rows[j].c);
       this.map.unshift([]);
@@ -146,6 +136,36 @@ GameContainer = Klass(CanvasNode, {
       }
     }
     
+    for(var i = 0; i < this.map.length; i++) {
+      for(var j = 0; j < this.map[i].length; j++) {
+        var block = this.map[i][j];
+        if (block.id > 0) {
+          var oldx = block.shape.childNodes[block.position].map.x;
+          block.shape.childNodes[block.position].set_map({x: i, y: j});
+          if (oldx != i) {
+            block.shape.childNodes[block.position].y += Block.size * (i - oldx);
+          }
+        }
+      }
+    }
+
+    var debug = document.getElementById("debug");
+    debug.innerHTML = "";
+    for(var i = 0; i < this.nheight; i++) {
+        var div = document.createElement("div")
+        for(var j = 0; j < this.nwidth; j++) {
+            var span = document.createElement("span");
+            span.innerHTML = "&nbsp;+&nbsp;";
+            if (this.map[i][j].id > 0) {
+                span.setAttribute("style", "width:20px;height:10px;background-color:red;");
+            } else {
+                span.setAttribute("style", "width:20px;height:10px;background-color:blue;");
+            }
+            div.appendChild(span);
+        }
+        debug.appendChild(div);
+    }
+
     // Update scores
     this.score.scores += rows * this.SCORE_STEP;
   },

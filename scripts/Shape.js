@@ -93,7 +93,7 @@ Shape = Klass(CanvasNode, {
     if (this.childNodes.length == 0) {
       for(var i = 0; i < this.map[this.degree].length; i++) {
         for(var j = 0; j < this.map[this.degree][i].length; j++) {
-          if (this.map[this.degree][i][j] == 1) {        
+          if (this.map[this.degree][i][j] == 1) {
             var block = new Block({
               x: j * Block.size, 
               y: i * Block.size,
@@ -160,6 +160,10 @@ Shape = Klass(CanvasNode, {
   check_collision: function(x, y) {
     for(var i = 0; i < this.childNodes.length; i++) {
       var c = this.get_coords(x + this.childNodes[i].x, y + this.childNodes[i].y);
+      if (!this.container.map[c.x]
+          || !this.container.map[c.x][c.y]) {
+        debugger;        
+      }
       if (this.container.map[c.x][c.y].id > 0) {
         return false;
       }
@@ -208,8 +212,8 @@ Shape = Klass(CanvasNode, {
         context.x = c.y * Block.size; // 0..nwidth - 1
         context.y = c.x * Block.size; // 0..nheight - 1
         context.removeFrameListener(Shape.update_onframe);
-        context.container.next_shape();
         context.container.check_rows();
+        context.container.next_shape();
       } else {
         if (fail != null) {
           fail.call();
@@ -233,11 +237,26 @@ Shape = Klass(CanvasNode, {
   */
   remove_block: function(conf) {
     var block = this.childNodes[conf.position];
+    if (!this.container.map[block.map.x]) {
+        debugger;
+    }
+    if (!this.container.map[block.map.x][block.map.y]) {
+        debugger;
+    }
     this.container.map[block.map.x][block.map.y] = {id: 0};
+    if (!this.childNodes[conf.position]) {
+       debugger;
+    }
     this.childNodes[conf.position].removeSelf();
     if (this.childNodes.length != 0) {
       for(var i = conf.position; i < this.childNodes.length; i++) {
         var b = this.childNodes[i];
+        if (!this.container.map[b.map.x]) {
+            debugger;
+        }
+        if (!this.container.map[b.map.x][b.map.y]) {
+            debugger;
+        }
         if (this.container.map[b.map.x][b.map.y].position > 0) {
           this.container.map[b.map.x][b.map.y].position -= 1;  
         }
@@ -247,7 +266,7 @@ Shape = Klass(CanvasNode, {
       // if we have removed all blocks before.
       this.removeSelf();
       this.container.shapes.remove(this);
-    }    
+    }
   },
   
   /*

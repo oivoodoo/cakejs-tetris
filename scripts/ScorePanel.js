@@ -1,5 +1,4 @@
 ScorePanel = Klass(CanvasNode, {
-
   scores: 0,
   shapes: [
     {map: [[[1,1],[1,1]]]},
@@ -30,7 +29,7 @@ ScorePanel = Klass(CanvasNode, {
 
   initialize: function(parent) {
     CanvasNode.initialize.call(this);
-    
+
     // Set game container as parent object for score panel.
     this.parent = parent;
   },
