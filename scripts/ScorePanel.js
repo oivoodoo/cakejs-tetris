@@ -64,6 +64,5 @@ ScorePanel = Klass(CanvasNode, {
   update_scores: function(score) {
     this.scores += score;
     $(this.container_id).html(this.scores);
-    // $(this.container_id).animate({opacity: 0.25}, 500); 
   }
 });

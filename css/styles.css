@@ -41,30 +41,42 @@ h3, p
 }
 
 #page {
-  margin: auto 0px;
+  margin: 0 auto;
   padding: 20px;
 }
 
-#game_container {
-  clear: both;
-  z-index: 1000;
-  position: relative;
-  margin-bottom: 10px;
-  float:left;
-  margin-right: 30px;
+#page_inner {
+  margin: 0 auto;
+  width: 600px;
 }
 
-#game_scores {
-  padding: 10px;
+.shadow {
   -webkit-box-shadow: rgba(0, 0, 0, 0.296875) 0px 0px 8px;
   background: white;
   border-bottom-left-radius: 10px 10px;
   border-bottom-right-radius: 10px 10px;
   border-top-left-radius: 10px 10px;
   border-top-right-radius: 10px 10px;
-  width: 150px;
+}
+
+#game_container {
+  z-index: 1000;
+  position: relative;
+  margin-bottom: 10px;
+  float:left;
+  margin-right: 30px;
+  margin-top: 10px;
+}
+
+#game_scores, #game_controls {
+  padding: 10px;
+  width: 170px;
   float: left;
   margin-top: 10px;
+}
+
+#game_controls ul {
+  list-style: none;
 }
 
 #container {
@@ -72,12 +84,6 @@ h3, p
 	width: 320px;
 	height: 480px;
   padding: 3px;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.296875) 0px 0px 8px;
-  background: white;
-  border-bottom-left-radius: 10px 10px;
-  border-bottom-right-radius: 10px 10px;
-  border-top-left-radius: 10px 10px;
-  border-top-right-radius: 10px 10px;
 }
 
 #social 

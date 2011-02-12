@@ -7,25 +7,47 @@
 
   <body>
     <div id="page">
-      <div class="menu">
-				<ul>
-					<li class="l1"><a id="new_button" href="#">New</a></li>
-					<li class="l2"><a onclick="chrome.tabs.create({url: 'mailto:alex.korsak@gmail.com'}); return false;" href="#">Feedback</a></li>
-					<li class="l3"><a onclick="chrome.tabs.create({url: 'http://oivoodoo.tumblr.com/'}); return false;" href="#">Blog</a></li>
-				</ul>
-				<span>by Alexander Korsak</span> 
-			</div>
       
-      <div id="game_container">
-        <!-- place there game -->
+			<div id="page_inner">
+			
+        <div class="menu">
+				  <ul>
+					  <li class="l1"><a id="new_button" href="#">New</a></li>
+					  <li class="l2"><a onclick="chrome.tabs.create({url: 'mailto:alex.korsak@gmail.com'}); return false;" href="#">Feedback</a></li>
+					  <li class="l3"><a onclick="chrome.tabs.create({url: 'http://oivoodoo.tumblr.com/'}); return false;" href="#">Blog</a></li>
+				  </ul>
+				  <span>by Alexander Korsak</span> 
+			  </div>
+			  
+			  <div class="clear"></div>
+			  
+        <div id="game_container" class="shadow">
+          <!-- place there game -->
+        </div>
+        
+        <div id="game_scores" class="shadow">
+          <h3>Scores:</h3>
+          <b><p id="scores_number">0</p></b>
+        </div>
+        
+        <div id="game_controls" class="shadow">
+          <h3>Keyboard:</h3>
+          <ul>
+            <li><b>'a'</b> - move to the left</li>
+            <li><b>'d'</b> - move to the right</li>
+            <li><b>'s'</b> - move to the bottom quickly</li>
+            <li><b>(space)</b> - rotate the shape</li>
+            <li>------------------------------------------</li>
+            <li><b>'b'</b> - begin</li>
+            <li><b>'b'</b> - restart</li>
+            <li><b>'p'</b> - pause</li>
+            <li><b>'g'</b> - resume</li>
+          </ul>
+        </div>
+        
+        <div class="clear"></div>
+        
       </div>
-      
-      <div id="game_scores">
-        <h3>Scores:</h3>
-        <p id="scores_number">0</p>
-      </div>
-      
-      <div class="clearer"></div>      
       
     </div>
     

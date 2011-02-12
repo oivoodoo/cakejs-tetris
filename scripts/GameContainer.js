@@ -1,5 +1,4 @@
 GameContainer = Klass(CanvasNode, { 
-  score: new ScorePanel(),
   background: '#FFFFFF',
   nwidth: 16,
   nheight: 24,
@@ -13,14 +12,14 @@ GameContainer = Klass(CanvasNode, {
   /*
     Key codes for game keyboard control.
   */
-  RIGHT: 100,     // 'D'
-  LEFT: 97,       // 'A'
-  PAUSE: 112,     // 'P'
+  RIGHT: 100,     // 'd'
+  LEFT: 97,       // 'a'
+  PAUSE: 112,     // 'p'
   SPACE: 32,      // ' '
-  BOTTOM: 115,    // 'S'
-  BEGIN: 98,      // 'B'
-  RESTART: 114,   // 'R'
-  RESUME: 103,    // 'G'
+  BOTTOM: 115,    // 's'
+  BEGIN: 98,      // 'b'
+  RESTART: 114,   // 'r'
+  RESUME: 103,    // 'g'
   BOTTOM_BLOCK: 998,    // move shape to the bottom with Block.size step
   ENSURE_POSITION: 999, // just ensure position
   
@@ -44,12 +43,21 @@ GameContainer = Klass(CanvasNode, {
     
     this.append(this.container);
 
+    this.create_score_panel();
+    
+    this.addEventListener('keypress', this.move_shape_by_keyboard);   
+  },
+  
+  create_score_panel: function() {
+    // recreate score panel
+    if (!!this.score) {
+      this.score.removeSelf();
+    }
     // This panel will generate next shape and preview it.
     // Score panel also contains preview for the game object
     // and scores what use have got.
+    this.score = new ScorePanel();
     this.append(this.score);
-    
-    this.addEventListener('keypress', this.move_shape_by_keyboard);   
   },
   
   setup: function() {
@@ -136,8 +144,10 @@ GameContainer = Klass(CanvasNode, {
       }
     }
 
-    // Update scores
-    this.score.update_scores(rows.length * this.SCORE_STEP);
+    if (rows.length > 0) {
+      // Update scores
+      this.score.update_scores(rows.length * this.SCORE_STEP);
+    }
   },
 
   start: function() {
@@ -153,12 +163,20 @@ GameContainer = Klass(CanvasNode, {
   },
 
   restart: function() {
-       
+    for(var i = 0; i < this.shapes.length; i++) {
+      this.shapes[i].removeSelf();
+    }
+    this.map = [];
+    this.shapes = [];
+    this.setup();
+    
+    this.create_score_panel();
   },
   
   gameover: function() {
+    this.restart();
     // if current shapes is moved to the game container
     // TODO: we have to show message with gameover window.
-    // TODO: send high scores to the server with scores, developed by rails.
+    // TODO: send high scores to the server with scores, developed by node.
   }
 });
