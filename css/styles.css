@@ -45,6 +45,10 @@ h3, p
   padding: 20px;
 }
 
+#page h3 {
+  margin-bottom: 5px;
+}
+
 #page_inner {
   margin: 0 auto;
   width: 600px;
@@ -77,6 +81,10 @@ h3, p
 
 #game_controls ul {
   list-style: none;
+}
+
+#game_controls > .box {
+  margin-bottom: 10px;
 }
 
 #container {
