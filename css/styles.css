@@ -72,7 +72,7 @@ h3, p
   margin-top: 10px;
 }
 
-#game_scores, #game_controls {
+#game_scores, #game_controls, #high_scores {
   padding: 10px;
   width: 170px;
   float: left;
@@ -85,6 +85,15 @@ h3, p
 
 #game_controls > .box {
   margin-bottom: 10px;
+}
+
+#high_scores {
+  height: 237px;
+}
+
+#high_scores ul {
+  list-style-type: decimal;
+  margin-left: 20px;
 }
 
 #container {
