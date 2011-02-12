@@ -1,4 +1,5 @@
 ScorePanel = Klass(CanvasNode, {
+  container_id: "#scores_number",
   scores: 0,
   shapes: [
     {map: [[[1,1],[1,1]]]},
@@ -58,5 +59,11 @@ ScorePanel = Klass(CanvasNode, {
   get_color: function() {
     var next = Math.floor(Math.random() * this.colors.length);
     return this.colors[next];
+  },
+  
+  update_scores: function(score) {
+    this.scores += score;
+    $(this.container_id).html(this.scores);
+    // $(this.container_id).animate({opacity: 0.25}, 500); 
   }
 });

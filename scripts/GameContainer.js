@@ -20,10 +20,11 @@ GameContainer = Klass(CanvasNode, {
   BOTTOM: 115,    // 'S'
   BEGIN: 98,      // 'B'
   RESTART: 114,   // 'R'
+  RESUME: 103,    // 'G'
   BOTTOM_BLOCK: 998,    // move shape to the bottom with Block.size step
   ENSURE_POSITION: 999, // just ensure position
   
-  initialize: function(canvasElem) {
+  initialize: function(canvasElem, options) {
     CanvasNode.initialize.call(this);
     
     this.setup();
@@ -37,8 +38,6 @@ GameContainer = Klass(CanvasNode, {
       fill: this.background,
       rx: 2,
       ry: 2,
-      strokeWidth: 1,
-      stroke: 'cyan',
       x: 0,
       y: 0
     });
@@ -50,7 +49,7 @@ GameContainer = Klass(CanvasNode, {
     // and scores what use have got.
     this.append(this.score);
     
-    this.addEventListener('keypress', this.move_shape_by_keyboard);
+    this.addEventListener('keypress', this.move_shape_by_keyboard);   
   },
   
   setup: function() {
@@ -85,7 +84,9 @@ GameContainer = Klass(CanvasNode, {
       this.start();
     } else if (e.keyCode == this.RESTART) {
       this.restart();
-    } 
+    } else if (e.keyCode == this.RESUME) {
+      this.resume();
+    }
   },
   
   next_shape: function() {
@@ -114,20 +115,6 @@ GameContainer = Klass(CanvasNode, {
       }
     }
 
-    // We have to move rows to bottom if we remove some rows
-    // after detection 'boom'!!! :)
-    /*if (rows.length > 0) {
-      for(var z = 0; z < this.shapes.length; z++) {
-        var shape = this.shapes[z];
-        for(var p = 0; p < shape.childNodes.length; p++) { 
-          shape.childNodes[p].set_map({
-            x: shape.childNodes[p].map.x + rows.length, 
-            y: shape.childNodes[p].map.y
-          });
-        }
-      }
-    }*/
-
     for(var j = 0; j < rows.length; j++) {
       this.map.remove(rows[j].c);
       this.map.unshift([]);
@@ -149,25 +136,8 @@ GameContainer = Klass(CanvasNode, {
       }
     }
 
-    var debug = document.getElementById("debug");
-    debug.innerHTML = "";
-    for(var i = 0; i < this.nheight; i++) {
-        var div = document.createElement("div")
-        for(var j = 0; j < this.nwidth; j++) {
-            var span = document.createElement("span");
-            span.innerHTML = "&nbsp;+&nbsp;";
-            if (this.map[i][j].id > 0) {
-                span.setAttribute("style", "width:20px;height:10px;background-color:red;");
-            } else {
-                span.setAttribute("style", "width:20px;height:10px;background-color:blue;");
-            }
-            div.appendChild(span);
-        }
-        debug.appendChild(div);
-    }
-
     // Update scores
-    this.score.scores += rows * this.SCORE_STEP;
+    this.score.update_scores(rows.length * this.SCORE_STEP);
   },
 
   start: function() {
@@ -177,10 +147,13 @@ GameContainer = Klass(CanvasNode, {
   pause: function() {
     this.score.current_shape.removeFrameListener(Shape.update_onframe);
   },
+  
+  resume: function() {
+    this.score.current_shape.addFrameListener(Shape.update_onframe);
+  },
 
   restart: function() {
-    // TODO: implement restart methods, we have to clear game panels and
-    // cleanup backup from localStorage with coordinates of game objects.
+       
   },
   
   gameover: function() {

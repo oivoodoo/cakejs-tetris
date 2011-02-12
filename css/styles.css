@@ -9,22 +9,23 @@ a, font, img, ul, li {
 	vertical-align: baseline;
 	background: transparent;
 }
-body {
-	line-height: 1;
-}
-header {
-    margin-top: 20px;
-}
+
 :focus {
 	outline: 0;
 }
+
 /* // Reset */
 
 body {
+  line-height: 1;
 	background: url(../images/background.jpg); /* image for body made with Photoshop using noise filter (gaussian monochromatic) on #ccc */
 	font-family: Georgia, Verdana, Lucida Sans Unicode�, sans-serif;
 	font-size: 12px;
 	color: #999;
+}
+
+header {
+    margin-top: 20px;
 }
 
 h2 {
@@ -33,29 +34,139 @@ h2 {
 	line-height: 1.2em;
 }
 
-
 h3, p
 {
 	padding: 0;
 	margin: 0;
 }
 
-#container 
+#page {
+  margin: auto 0px;
+  padding: 20px;
+}
+
+#game_container {
+  clear: both;
+  z-index: 1000;
+  position: relative;
+  margin-bottom: 10px;
+  float:left;
+  margin-right: 30px;
+}
+
+#game_scores {
+  padding: 10px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.296875) 0px 0px 8px;
+  background: white;
+  border-bottom-left-radius: 10px 10px;
+  border-bottom-right-radius: 10px 10px;
+  border-top-left-radius: 10px 10px;
+  border-top-right-radius: 10px 10px;
+  width: 150px;
+  float: left;
+  margin-top: 10px;
+}
+
+#container {
+	margin: 10px auto 0px auto; /* centered */
+	width: 320px;
+	height: 480px;
+  padding: 3px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.296875) 0px 0px 8px;
+  background: white;
+  border-bottom-left-radius: 10px 10px;
+  border-bottom-right-radius: 10px 10px;
+  border-top-left-radius: 10px 10px;
+  border-top-right-radius: 10px 10px;
+}
+
+#social 
 {
-	width:300px;
-	float:left;
-	margin-bottom: 10px;
+	padding-left: 30px;
+	margin-bottom: 30px;
+	width: 300px;
+}
+
+.menu {
+  width: 400px;
+	position: relative;
+	top:10px;
+	left: 50px;
+	z-index: 80; /* the stack order: displayed under bubble (90) */
+}
+
+.menu ul li {
+	-webkit-transform: rotate(-45deg); /* rotate the list item */
+	-moz-transform: rotate(-45deg); /* rotate the list item */
+	width: 50px;
+	overflow: hidden;   
+	margin: 10px 0px;
+	padding: 5px 5px 5px 18px;
+	float: left;
+	background: #7f9db9;
+	text-align: right;
+}
+
+.menu ul li a {
+	color: #fff;
+	text-decoration: none;
+	display:block;
+}
+
+.menu ul li.l1 {
+	background: rgba(131,178,51,0.65);
+}
+
+.menu ul li.l1:hover {
+	background: rgb(131,178,51);
+}
+
+.menu ul li.l2 {
+	background: rgba(196,89,30,0.65);
+}
+
+.menu ul li.l2:hover {
+	background: rgb(196,89,30);
+}
+
+.menu ul li.l3 {
+	background: rgba(65,117,160,0.65);
+}
+
+.menu ul li.l3:hover {
+	background: rgb(65,117,160);
+}
+
+.menu span {
+	margin: 15px 60px 0px 0px;
+	float:right;
+}
+
+.info {
+	padding: 40px 25px 35px 25px;
+}
+
+.info h2 {
+	font-size: 20px;
+}
+
+.info p {
+	padding-top: 10px;
+	font-size: 14px;
+	line-height: 22px;
+}
+
+.info p a {
+	color: #c4591e;
+	text-decoration: none;
+}
+
+.info p a:hover {
+	text-decoration: underline;
 }
 
 .clear
 {
 	clear:both;
 	font-size: 1px;
-}
-
-
-div#container {
-	margin: 10px auto 0px auto; /* centered */
-	width: 400px;
-    padding-bottom: 30px;
 }

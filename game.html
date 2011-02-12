@@ -6,24 +6,30 @@
   </head>
 
   <body>
-    <div>
-      <header>
-        <ul>
-            <li>Press 'b' for start the game.</li>
-            <li>Use arrows for moving shapes.</li>
-        </ul>
-      </header>
-      <table>
-          <tr>
-              <td id="page">
-              </td>
-              <td>
-                  <div id="debug">
-                  </div>
-              </td>
-          </tr>
-      </table>
+    <div id="page">
+      <div class="menu">
+				<ul>
+					<li class="l1"><a id="new_button" href="#">New</a></li>
+					<li class="l2"><a onclick="chrome.tabs.create({url: 'mailto:alex.korsak@gmail.com'}); return false;" href="#">Feedback</a></li>
+					<li class="l3"><a onclick="chrome.tabs.create({url: 'http://oivoodoo.tumblr.com/'}); return false;" href="#">Blog</a></li>
+				</ul>
+				<span>by Alexander Korsak</span> 
+			</div>
+      
+      <div id="game_container">
+        <!-- place there game -->
+      </div>
+      
+      <div id="game_scores">
+        <h3>Scores:</h3>
+        <p id="scores_number">0</p>
+      </div>
+      
+      <div class="clearer"></div>      
+      
     </div>
+    
+    <script type="text/javascript" language="javascript" charset="utf-8" src='scripts/jquery.min.js' /></script>
     <script type="text/javascript" language="javascript" charset="utf-8" src='scripts/cake.js'></script>
     <script type="text/javascript" language="javascript" charset="utf-8" src='scripts/Block.js' /></script>
     <script type="text/javascript" language="javascript" charset="utf-8" src='scripts/Shape.js' /></script>

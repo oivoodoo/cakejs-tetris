@@ -13,9 +13,13 @@ Array.prototype.remove = function() {
 }
 
 init = function() {
-  var c = E.canvas(640, 480);
+  var c = E.canvas(GameContainer.width, GameContainer.height);
   var d = E('div', { id: 'container' });
   d.appendChild(c);
-  document.getElementById("page").appendChild(d);
-  container = new GameContainer(c);
+  document.getElementById("game_container").appendChild(d);
+  var game = new GameContainer(c);
+  
+  $("#new_button").click(function() {
+    game.restart();  
+  });
 };
