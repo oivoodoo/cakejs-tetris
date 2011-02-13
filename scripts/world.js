@@ -19,7 +19,18 @@ init = function() {
   document.getElementById("game_container").appendChild(d);
   var game = new GameContainer(c);
   
-  $("#new_button").click(function() {
-    game.restart();  
-  });
+  ;(function($) {
+    $("#new_button").click(function() {
+      game.restart();  
+    });
+    
+    $.getJSON('http://oivoodoo.no.de/json', function(data) {
+      var html = "";
+      $.each(data, function(i, o) {
+        html += "<li>" + o.username + ": " + o.scores + "</li>";
+      });
+      $("#scores_table").html(html);
+    });
+    
+  })(jQuery);
 };
