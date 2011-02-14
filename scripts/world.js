@@ -20,17 +20,40 @@ init = function() {
   var game = new GameContainer(c);
   
   ;(function($) {
+    
     $("#new_button").click(function() {
       game.restart();  
     });
     
-    $.getJSON('http://oivoodoo.no.de/json', function(data) {
-      var html = "";
-      $.each(data, function(i, o) {
-        html += "<li>" + o.username + ": " + o.scores + "</li>";
+    $("#save_button").click(function() {
+      $.post('http://oivoodoo.no.de/create', {
+        score: {
+          username: $("#username").val(), 
+          scores: $("#scores").html()
+        }
+      }, function() {
+        update_scores_table();
       });
-      $("#scores_table").html(html);
+      $("#game_over").fadeOut();
+      return false;
     });
     
+    $("#close_button").click(function() {
+      $("#game_over").fadeOut();
+      return false;
+    });
+    
+    function update_scores_table() {
+      $("#scores_table").html('');
+      $.getJSON('http://oivoodoo.no.de/top/json', function(data) {
+        var html = "";
+        $.each(data, function(i, o) {
+          html += "<li>" + o.username + ": " + o.scores + "</li>";
+        });
+        $("#scores_table").html(html);
+      });
+    };
+    
+    update_scores_table();
   })(jQuery);
 };

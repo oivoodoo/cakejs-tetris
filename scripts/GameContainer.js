@@ -99,10 +99,14 @@ GameContainer = Klass(CanvasNode, {
   
   next_shape: function() {
     var shape = this.score.next();
-    shape.addEventListener('keypress', this.move_shape);
-    shape.addFrameListener(shape.update_onframe);
-    this.shapes.push(shape);
-    this.append(shape);
+    if (!shape.check_collision(shape.x, shape.y + shape.step)) {
+      this.gameover();
+    } else {
+      shape.addEventListener('keypress', this.move_shape);
+      shape.addFrameListener(shape.update_onframe);
+      this.shapes.push(shape);
+      this.append(shape);
+    }
   },
 
   check_rows: function() {
@@ -174,9 +178,7 @@ GameContainer = Klass(CanvasNode, {
   },
   
   gameover: function() {
-    this.restart();
-    // if current shapes is moved to the game container
-    // TODO: we have to show message with gameover window.
-    // TODO: send high scores to the server with scores, developed by node.
+    this.pause();
+    $("#game_over").fadeIn();
   }
 });

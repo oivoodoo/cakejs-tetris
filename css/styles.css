@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "OrbitronMed";
+  src: url('../fonts/orbitron-medium.eot');
+  src: local('☺'), url("../fonts/orbitron-medium.otf") format("opentype");
+}
+
 /* Reset */
 html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, font, img, ul, li {
@@ -89,6 +95,47 @@ h3, p
 
 #high_scores {
   height: 237px;
+}
+
+#game_over {
+  padding: 10px;
+  width: 230px;
+  position: absolute;
+  top: 35px;
+  left: 35px;
+}
+
+#game_over h1 {
+  text-align: center;
+  font-family: OrbitronMed, 'Courier New', monospace;
+  font-size: 20px;
+  letter-spacing: 1px;
+  text-shadow: rgba(0, 0, 0, 0.59375) 1px 1px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+#game_over input {
+  padding: 2px;
+  width: 66%;
+}
+
+#game_over h3 {
+  margin-bottom: 10px;
+}
+
+#game_over #save_button {
+  background-color: #ec1e1e;
+  padding: 5px 10px;
+  width: 50px;
+  text-align:center;
+  color:white;
+  margin-bottom: 10px;
+}
+
+#game_over center {
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
 
 #high_scores ul {
