@@ -1,3 +1,9 @@
+/**
+ * @depends cake.js
+ * @depends GameContainer.js
+ * @depends jquery.min.js
+ */
+
 /*
   Snippet for removing value from javascript array.
 */

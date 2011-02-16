@@ -13,3 +13,4 @@ vendor/rails
 config/sumbur.yml
 *.tmp
 scripts/*.tmp
+build/*

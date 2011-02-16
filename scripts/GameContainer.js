@@ -1,3 +1,10 @@
+/**
+ * @depends cake.js
+ * @depends Shape.js
+ * @depends Block.js
+ * @depends jquery.min.js
+ */
+
 GameContainer = Klass(CanvasNode, { 
   background: '#FFFFFF',
   nwidth: 16,
@@ -22,11 +29,16 @@ GameContainer = Klass(CanvasNode, {
   RESUME: 103,    // 'g'
   BOTTOM_BLOCK: 998,    // move shape to the bottom with Block.size step
   ENSURE_POSITION: 999, // just ensure position
+  GAME_ON: 101,
+  GAME_OFF: 102,
+  GAME_PAUSE: 103,
   
   initialize: function(canvasElem, options) {
     CanvasNode.initialize.call(this);
     
     this.setup();
+    
+    this.game_state = this.GAME_OFF;
     
     this.canvas = new Canvas(canvasElem);
     this.canvas.frameDuration = 40;
@@ -74,7 +86,7 @@ GameContainer = Klass(CanvasNode, {
   move_shape_by_keyboard: function(e) {
     var shape = this.score.current_shape;
     // Shape controls.
-    if (shape != null) {
+    if (shape != null && this.game_state != this.GAME_PAUSE) {
       if (e.keyCode == this.RIGHT) {
         shape.move(this.RIGHT);
       } else if (e.keyCode == this.LEFT) {
@@ -86,13 +98,13 @@ GameContainer = Klass(CanvasNode, {
       }
     }
     // Common game controls.
-    if (e.keyCode == this.PAUSE) {
+    if (e.keyCode == this.PAUSE && this.game_state == this.GAME_ON) {
       this.pause();
-    } else if (e.keyCode == this.BEGIN) {
+    } else if (e.keyCode == this.BEGIN && this.game_state == this.GAME_OFF) {
       this.start();
     } else if (e.keyCode == this.RESTART) {
       this.restart();
-    } else if (e.keyCode == this.RESUME) {
+    } else if (e.keyCode == this.PAUSE && this.game_state == this.GAME_PAUSE) {
       this.resume();
     }
   },
@@ -155,18 +167,22 @@ GameContainer = Klass(CanvasNode, {
   },
 
   start: function() {
+    this.game_state = this.GAME_ON;
     this.next_shape();
   },
 
   pause: function() {
+    this.game_state = this.GAME_PAUSE;
     this.score.current_shape.removeFrameListener(Shape.update_onframe);
   },
   
   resume: function() {
+    this.game_state = this.GAME_ON;
     this.score.current_shape.addFrameListener(Shape.update_onframe);
   },
 
   restart: function() {
+    this.game_state = this.GAME_OFF;
     for(var i = 0; i < this.shapes.length; i++) {
       this.shapes[i].removeSelf();
     }
@@ -179,6 +195,8 @@ GameContainer = Klass(CanvasNode, {
   
   gameover: function() {
     this.pause();
+    this.game_state = this.GAME_OFF;
+    $("#scores").html(this.score.scores);
     $("#game_over").fadeIn();
   }
 });

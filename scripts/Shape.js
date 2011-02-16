@@ -1,3 +1,8 @@
+/**
+ * @depends cake.js
+ * @depends jquery.min.js
+ */
+
 Shape = Klass(CanvasNode, {
   degree: 0,
   map: [],
@@ -9,10 +14,6 @@ Shape = Klass(CanvasNode, {
     CanvasNode.initialize.call(this);
     
     this.setup(options);
-
-    this.addEventListener('click', function(e) {
-      this.rotate();
-    });
 
     this.render_shape();
 

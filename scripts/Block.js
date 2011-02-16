@@ -1,3 +1,7 @@
+/**
+ * @depends cake.js
+ */
+ 
 Block = Klass(CanvasNode, {
   backgroud: 'rgb(0, 0, 0)',
   opacity: 0.8,

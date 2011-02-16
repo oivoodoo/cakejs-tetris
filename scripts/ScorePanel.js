@@ -1,3 +1,8 @@
+/**
+ * @depends cake.js
+ * @depends jquery.min.js
+ */
+
 ScorePanel = Klass(CanvasNode, {
   container_id: "#scores_number",
   scores: 0,
