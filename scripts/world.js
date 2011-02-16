@@ -32,14 +32,16 @@ init = function() {
     });
     
     $("#save_button").click(function() {
-      $.post('http://oivoodoo.no.de/create', {
-        score: {
-          username: $("#username").val(), 
-          scores: $("#scores").html()
-        }
-      }, function() {
-        update_scores_table();
-      });
+      if ($("#username").val() != "" && !!$("#username").val()) {
+        $.post('http://oivoodoo.no.de/create', {
+          score: {
+            username: $("#username").val(), 
+            scores: $("#scores").html()
+          }
+        }, function() {
+          update_scores_table();
+        });
+      }
       $("#game_over").fadeOut();
       return false;
     });

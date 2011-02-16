@@ -1,10 +1,15 @@
 {
- "browser_action": {
-    "default_icon": "icon.png",
-    "popup": "game.html"
- },
- "description": "Tired? Then it's time to move!",
- "name": "Tetris(oivoodoo)",
- "permissions": [ "tabs" ],
- "version": "1.8"
+   "app": {
+      "launch": {
+         "local_path": "game.html"
+      }
+   },
+   "description": "Tired? Then it's time to move!",
+   "icons": {
+      "128": "images/icon_128.png",
+      "16": "images/icon.png"
+   },
+   "name": "Tetris",
+   "permissions": [ "tabs" ],
+   "version": "1.0"
 }

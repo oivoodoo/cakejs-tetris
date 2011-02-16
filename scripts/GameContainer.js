@@ -19,14 +19,17 @@ GameContainer = Klass(CanvasNode, {
   /*
     Key codes for game keyboard control.
   */
-  RIGHT: 100,     // 'd'
-  LEFT: 97,       // 'a'
-  PAUSE: 112,     // 'p'
+  RIGHT: 68,     // 'd'
+  LEFT: 65,       // 'a'
+  PAUSE: 80,     // 'p'
   SPACE: 32,      // ' '
-  BOTTOM: 115,    // 's'
-  BEGIN: 98,      // 'b'
-  RESTART: 114,   // 'r'
-  RESUME: 103,    // 'g'
+  BOTTOM: 83,    // 's'
+  BEGIN: 66,      // 'b'
+  RESTART: 82,   // 'r'
+  RESUME: 71,    // 'g'
+  RIGHT_A: 39,
+  LEFT_A: 37,
+  BOTTOM_A: 40,
   BOTTOM_BLOCK: 998,    // move shape to the bottom with Block.size step
   ENSURE_POSITION: 999, // just ensure position
   GAME_ON: 101,
@@ -56,8 +59,16 @@ GameContainer = Klass(CanvasNode, {
     this.append(this.container);
 
     this.create_score_panel();
-    
-    this.addEventListener('keypress', this.move_shape_by_keyboard);   
+
+    var context = this; 
+    $(document).keydown((function(app){
+      this.context = app;
+      return {
+        keydown: function(e) {
+          context.move_shape_by_keyboard(e, context);
+        }
+      };
+    })(this).keydown);
   },
   
   create_score_panel: function() {
@@ -83,29 +94,29 @@ GameContainer = Klass(CanvasNode, {
     }
   },
   
-  move_shape_by_keyboard: function(e) {
-    var shape = this.score.current_shape;
+  move_shape_by_keyboard: function(e, context) {
+    var shape = context.score.current_shape;
     // Shape controls.
-    if (shape != null && this.game_state != this.GAME_PAUSE) {
-      if (e.keyCode == this.RIGHT) {
-        shape.move(this.RIGHT);
-      } else if (e.keyCode == this.LEFT) {
-        shape.move(this.LEFT);
-      } else if (e.keyCode == this.SPACE) {
-        shape.move(this.SPACE);
-      } else if (e.keyCode == this.BOTTOM) {
-        shape.move(this.BOTTOM);
+    if (shape != null && context.game_state != context.GAME_PAUSE) {
+      if (e.keyCode == context.RIGHT || e.keyCode == context.RIGHT_A) {
+        shape.move(context.RIGHT);
+      } else if (e.keyCode == context.LEFT || e.keyCode == context.LEFT_A) {
+        shape.move(context.LEFT);
+      } else if (e.keyCode == context.SPACE) {
+        shape.move(context.SPACE);
+      } else if (e.keyCode == context.BOTTOM || e.keyCode == context.BOTTOM_A) {
+        shape.move(context.BOTTOM);
       }
     }
     // Common game controls.
-    if (e.keyCode == this.PAUSE && this.game_state == this.GAME_ON) {
-      this.pause();
-    } else if (e.keyCode == this.BEGIN && this.game_state == this.GAME_OFF) {
-      this.start();
-    } else if (e.keyCode == this.RESTART) {
-      this.restart();
-    } else if (e.keyCode == this.PAUSE && this.game_state == this.GAME_PAUSE) {
-      this.resume();
+    if (e.keyCode == context.PAUSE && context.game_state == context.GAME_ON) {
+      context.pause();
+    } else if (e.keyCode == context.BEGIN && context.game_state == context.GAME_OFF) {
+      context.start();
+    } else if (e.keyCode == context.RESTART) {
+      context.restart();
+    } else if (e.keyCode == context.PAUSE && context.game_state == context.GAME_PAUSE) {
+      context.resume();
     }
   },
   
