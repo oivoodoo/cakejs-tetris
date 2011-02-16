@@ -179,6 +179,7 @@ GameContainer = Klass(CanvasNode, {
   },
 
   start: function() {
+    this.restart();
     this.game_state = this.GAME_ON;
     this.next_shape();
   },
