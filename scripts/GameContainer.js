@@ -29,6 +29,7 @@ GameContainer = Klass(CanvasNode, {
   RESUME: 71,    // 'g'
   RIGHT_A: 39,
   LEFT_A: 37,
+  SPACE_A: 38,
   BOTTOM_A: 40,
   BOTTOM_BLOCK: 998,    // move shape to the bottom with Block.size step
   ENSURE_POSITION: 999, // just ensure position
@@ -102,7 +103,7 @@ GameContainer = Klass(CanvasNode, {
         shape.move(context.RIGHT);
       } else if (e.keyCode == context.LEFT || e.keyCode == context.LEFT_A) {
         shape.move(context.LEFT);
-      } else if (e.keyCode == context.SPACE) {
+      } else if (e.keyCode == context.SPACE || e.keyCode == context.SPACE_A) {
         shape.move(context.SPACE);
       } else if (e.keyCode == context.BOTTOM || e.keyCode == context.BOTTOM_A) {
         shape.move(context.BOTTOM);
