@@ -82,6 +82,9 @@ GameContainer = Klass(CanvasNode, {
     // and scores what use have got.
     this.score = new ScorePanel();
     this.append(this.score);
+    
+    $("#scores_number").html(0);
+    $("#level_number").html(0);
   },
   
   setup: function() {
