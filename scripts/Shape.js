@@ -43,6 +43,9 @@ Shape = Klass(CanvasNode, {
       if (options.id != null) {
         this.id = options.id;
       }
+      if (options.step != null) {
+        this.step = options.step;
+      }
     }
   },
   

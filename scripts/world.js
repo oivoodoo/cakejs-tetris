@@ -28,7 +28,8 @@ init = function() {
   ;(function($) {
     
     $("#new_button").click(function() {
-      game.restart();  
+      game.restart();
+      game.start();
     });
     
     $("#save_button").click(function() {

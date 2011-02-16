@@ -18,6 +18,16 @@ ScorePanel = Klass(CanvasNode, {
             [1,1]],
            [[1,0,0],
             [1,1,1]]]},
+    {map: [[[1,1],
+            [0,1],
+            [0,1]],
+           [[1,1,1],
+            [1,0,0]],
+           [[1,0],
+            [1,0],
+            [1,1]],
+           [[0,0,1],
+            [1,1,1]]]},
     {map: [[[1,1,1],
             [0,1,0]],
            [[0,1],
@@ -46,11 +56,21 @@ ScorePanel = Klass(CanvasNode, {
   next: function() {
     var next = Math.floor(Math.random() * this.shapes.length);
     var degree = Math.floor(Math.random() * this.shapes[next].map.length);
+    
+    var step = Math.floor(this.scores / 1000);
+    if (step == 0) {
+      step = 1;
+    } else {
+      step += 0.5;
+    }
+    
+    $("#level_number").html((step - 0.5) / 0.5);
     this.current_shape = new Shape({
       map: this.shapes[next].map, 
       degree: degree, 
       color: this.get_color(),
       x: GameContainer.width / 2,
+      step: step,
       y: 0,
       container: this.parent,
       id: this.parent.shapes.length + 1
