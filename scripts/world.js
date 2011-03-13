@@ -23,7 +23,11 @@ init = function() {
   var d = E('div', { id: 'container' });
   d.appendChild(c);
   document.getElementById("game_container").appendChild(d);
-  var game = new GameContainer(c);
+  
+  var c2 = E.canvas(80, 50);
+  document.getElementById("current_shape_container").appendChild(c2);
+  
+  var game = new GameContainer(c, new NextShape(c2));
   
   ;(function($) {
     

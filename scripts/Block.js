@@ -11,6 +11,10 @@ Block = Klass(CanvasNode, {
   initialize: function(options) {
     CanvasNode.initialize.call(this);
     
+    if (options.size != null) {
+      this.size = options.size;
+    }
+    
     this.shape = new Rectangle(this.size, this.size, {
       fill: options.color,
       stroke: 'cyan', 

@@ -57,7 +57,7 @@ h3, p
 
 #page_inner {
     margin: 0 auto;
-    width: 800px;
+    width: 820px;
 }
 
 .shadow {
@@ -90,6 +90,7 @@ h3, p
 
 #high_scores {
     margin-right: 30px;
+    width: 190px;
 }
 
 #game_controls ul {

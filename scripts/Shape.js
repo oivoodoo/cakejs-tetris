@@ -9,6 +9,7 @@ Shape = Klass(CanvasNode, {
   step: 1,
   blocks: [],
   MAX_STEP: 15,
+  box_size: Block.size,
   
   initialize: function(options) {
     CanvasNode.initialize.call(this);
@@ -20,6 +21,8 @@ Shape = Klass(CanvasNode, {
     if (this.color != null) {
       this.set_color(this.color);
     }
+    
+    this.backup_step = this.step;
   },
   
   setup: function(options) {
@@ -45,6 +48,9 @@ Shape = Klass(CanvasNode, {
       }
       if (options.step != null) {
         this.step = options.step;
+      }
+      if (options.box_size != null) {
+        this.box_size = options.box_size;
       }
     }
   },
@@ -99,9 +105,10 @@ Shape = Klass(CanvasNode, {
         for(var j = 0; j < this.map[this.degree][i].length; j++) {
           if (this.map[this.degree][i][j] == 1) {
             var block = new Block({
-              x: j * Block.size, 
-              y: i * Block.size,
-              color: this.color
+              x: j * this.box_size, 
+              y: i * this.box_size,
+              color: this.color,
+              size: this.box_size
             });
             this.blocks.push(block);
             this.append(block);
@@ -130,6 +137,9 @@ Shape = Klass(CanvasNode, {
         break;
       case GameContainer.BOTTOM:
         this.step = this.MAX_STEP;
+        break;
+      case GameContainer.RESTORE_STEP:
+        this.step = this.backup_step;
         break;
       case GameContainer.ENSURE_POSITION:
         this.check_move(context, this.x, this.y + this.step, true, function() {

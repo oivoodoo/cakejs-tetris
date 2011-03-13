@@ -36,9 +36,12 @@ GameContainer = Klass(CanvasNode, {
   GAME_ON: 101,
   GAME_OFF: 102,
   GAME_PAUSE: 103,
+  RESTORE_STEP: 997,
   
-  initialize: function(canvasElem, options) {
+  initialize: function(canvasElem, next_shape_panel, options) {
     CanvasNode.initialize.call(this);
+    
+    this.next_shape_panel = next_shape_panel;
     
     this.setup();
     
@@ -70,6 +73,14 @@ GameContainer = Klass(CanvasNode, {
         }
       };
     })(this).keydown);
+    $(document).keyup((function(app){
+      this.context = app;
+      return {
+        keyup: function(e) {
+          context.container_keyup(e, context);
+        }
+      }
+    })(this).keyup);
   },
   
   create_score_panel: function() {
@@ -80,7 +91,7 @@ GameContainer = Klass(CanvasNode, {
     // This panel will generate next shape and preview it.
     // Score panel also contains preview for the game object
     // and scores what use have got.
-    this.score = new ScorePanel();
+    this.score = new ScorePanel(this, this.next_shape_panel);
     this.append(this.score);
     
     $("#scores_number").html(0);
@@ -95,6 +106,13 @@ GameContainer = Klass(CanvasNode, {
       for(var j = 0; j < this.nwidth; j++) {
         this.map[i].push({id: 0, position: 0, shape: null});
       }
+    }
+  },
+  
+  container_keyup: function(e, context) {
+    var shape = context.score.current_shape;
+    if (e.keyCode == context.BOTTOM || e.keyCode == context.BOTTOM_A) {
+      shape.move(context.RESTORE_STEP);
     }
   },
   
