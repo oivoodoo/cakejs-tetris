@@ -11,5 +11,5 @@
    },
    "name": "Tetris",
    "permissions": [ "tabs" ],
-   "version": "1.15"
+   "version": "1.16"
 }
