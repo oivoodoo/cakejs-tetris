@@ -13,41 +13,48 @@ task :build do
   sh "jammit"
 
   sh "rm -rf build/ ; mkdir build"
+  sh "rm -rf bin/ ; mkdir bin"
+
   folders.each do |f|
     sh "cp -r #{f}/ build/"
   end
   files.each do |f|
     sh "cp #{f} build/#{f}"
   end
+
+  sh "zip -r build.zip build/"
+  sh "mv build.zip bin/"
+  sh "rm -rf build/"
 end
 
 namespace :build do
 
   task :major do
     open_manifest do |parsed, version|
-      version.major = version.major + 1
-      version.minor = 0
-      parsed['version'] = version.to_s
-      parsed
+      parsed['version'] = "#{version.major + 1}.0"
     end
   end
 
   task :minor do
     open_manifest do |parsed, version|
-      version.minor = version.minor + 1
-      parsed['version'] = version.to_s
-      parsed
+      parsed['version'] = "#{version.major}.#{version.minor + 1}"
     end
   end
 
 end
 
-def open_manifest &block
+def open_manifest
   File.open('manifest.json', "r") do |file|
     buffer = file.read
     parsed = JSON.parse(buffer)
     version = Versionomy.parse(parsed['version'])
-    @content = JSON.dump(block.call(parsed, version))
+
+    yield parsed, version
+
+    @content = JSON.dump(parsed)
   end
-  File.open('manifest.json', "w").write @content
+
+  File.open('manifest.json', "w") do |file|
+    file.write(@content)
+  end
 end
