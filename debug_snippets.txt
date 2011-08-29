@@ -1,1 +1,0 @@
-var html = ''; for(var i = 0 ; i < this.nheight; i++) { html += '\n'; for(var j = 0; j < this.nwidth; j++) { html+=this.map[i][j].id; }} console.log(html);

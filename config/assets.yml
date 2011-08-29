@@ -1,0 +1,12 @@
+package_assets: on
+
+javascripts:
+  common:
+    - scripts/zepto.min.js
+    - scripts/cake.js
+  game:
+    - scripts/game/Block.js
+    - scripts/game/Shape.js
+    - scripts/game/ScorePanel.js
+    - scripts/game/GameContainer.js
+    - scripts/game/world.js
