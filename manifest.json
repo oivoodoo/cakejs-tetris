@@ -1,1 +1,1 @@
-{"name":"Tetro Blocks","app":{"launch":{"local_path":"game.html"}},"icons":{"128":"images/icon_128.png","16":"images/icon.png"},"version":"1.19","description":"Tired? Then it's time to move!","permissions":["tabs"]}
+{"name":"Tetro Blocks","app":{"launch":{"local_path":"game.html"}},"icons":{"128":"images/icon_128.png","16":"images/icon.png"},"version":"1.20","permissions":["tabs"],"description":"Tired? Then it's time to move!"}
