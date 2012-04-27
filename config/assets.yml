@@ -2,7 +2,7 @@ package_assets: on
 
 javascripts:
   common:
-    - scripts/zepto.min.js
+    - scripts/jquery.min.js
     - scripts/cake.js
   game:
     - scripts/game/Block.js

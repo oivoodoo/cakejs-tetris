@@ -5,7 +5,7 @@
  * @depends jquery.min.js
  */
 
-GameContainer = Klass(CanvasNode, { 
+GameContainer = Klass(CanvasNode, {
   background: '#FFFFFF',
   nwidth: 16,
   nheight: 24,
@@ -13,7 +13,7 @@ GameContainer = Klass(CanvasNode, {
   height: Block.size * 24,
   map: [], // Contains all placement of shape parts.
   shapes: [],
-  
+
   SCORE_STEP: 100,
 
   /*
@@ -37,20 +37,20 @@ GameContainer = Klass(CanvasNode, {
   GAME_OFF: 102,
   GAME_PAUSE: 103,
   RESTORE_STEP: 997,
-  
+
   initialize: function(canvasElem, next_shape_panel, options) {
     CanvasNode.initialize.call(this);
-    
+
     this.next_shape_panel = next_shape_panel;
-    
+
     this.setup();
-    
+
     this.game_state = this.GAME_OFF;
-    
+
     this.canvas = new Canvas(canvasElem);
     this.canvas.frameDuration = 40;
     this.canvas.append(this);
-    
+
     // Draw container where we will place shape objects.
     this.container = new Rectangle(this.width, this.height, {
       fill: this.background,
@@ -59,12 +59,12 @@ GameContainer = Klass(CanvasNode, {
       x: 0,
       y: 0
     });
-    
+
     this.append(this.container);
 
     this.create_score_panel();
 
-    var context = this; 
+    var context = this;
     $(document).keydown((function(app){
       this.context = app;
       return {
@@ -82,7 +82,7 @@ GameContainer = Klass(CanvasNode, {
       }
     })(this).keyup);
   },
-  
+
   create_score_panel: function() {
     // recreate score panel
     if (!!this.score) {
@@ -93,11 +93,11 @@ GameContainer = Klass(CanvasNode, {
     // and scores what use have got.
     this.score = new ScorePanel(this, this.next_shape_panel);
     this.append(this.score);
-    
+
     $("#scores_number").html(0);
     $("#level_number").html(0);
   },
-  
+
   setup: function() {
     // Initialize map of the game container with 0, it means we haven't
     // any blocks in the game container.
@@ -108,14 +108,14 @@ GameContainer = Klass(CanvasNode, {
       }
     }
   },
-  
+
   container_keyup: function(e, context) {
     var shape = context.score.current_shape;
     if (e.keyCode == context.BOTTOM || e.keyCode == context.BOTTOM_A) {
       shape.move(context.RESTORE_STEP);
     }
   },
-  
+
   move_shape_by_keyboard: function(e, context) {
     var shape = context.score.current_shape;
     // Shape controls.
@@ -141,7 +141,7 @@ GameContainer = Klass(CanvasNode, {
       context.resume();
     }
   },
-  
+
   next_shape: function() {
     var shape = this.score.next();
     if (!shape.check_collision(shape.x, shape.y + shape.step)) {
@@ -179,7 +179,7 @@ GameContainer = Klass(CanvasNode, {
         this.map[0].push({id: 0});
       }
     }
-    
+
     for(var i = 0; i < this.map.length; i++) {
       for(var j = 0; j < this.map[i].length; j++) {
         var block = this.map[i][j];
@@ -209,7 +209,7 @@ GameContainer = Klass(CanvasNode, {
     this.game_state = this.GAME_PAUSE;
     this.score.current_shape.removeFrameListener(Shape.update_onframe);
   },
-  
+
   resume: function() {
     this.game_state = this.GAME_ON;
     this.score.current_shape.addFrameListener(Shape.update_onframe);
@@ -223,13 +223,16 @@ GameContainer = Klass(CanvasNode, {
     this.map = [];
     this.shapes = [];
     this.setup();
-    
+
     this.create_score_panel();
   },
-  
+
   gameover: function() {
+    console.log("Guys, please try to write own games instead of playing with kid queries.");
+
     this.pause();
     this.game_state = this.GAME_OFF;
+    this.scores = this.score.scores;
     $("#scores").html(this.score.scores);
     $("#game_over").fadeIn();
   }

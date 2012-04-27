@@ -41,18 +41,20 @@ init = function() {
         $.post('http://oivoodoo.no.de/create', {
           score: {
             username: $("#username").val(),
-            scores: $("#scores").html()
+            scores: game.scores
           }
         }, function() {
           update_scores_table();
         });
       }
       $("#game_over").fadeOut();
+
       return false;
     });
 
     $("#close_button").click(function() {
       $("#game_over").fadeOut();
+
       return false;
     });
 

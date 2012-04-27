@@ -1,103 +1,102 @@
 <html>
-    <head>
-        <meta http-equiv="content-script-type" content="text/javascript">
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-        <title>Mini Canvas Tetris by oivoodoo</title>
-        <link rel="stylesheet" type="text/css" href="css/styles.css">
-    </head>
+  <head>
+    <meta http-equiv="content-script-type" content="text/javascript">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>Mini Canvas Tetris by oivoodoo</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+  </head>
 
-    <body>
-        <div id="page">
-            <div id="page_inner">
+  <body>
+    <div id="page">
+      <div id="page_inner">
 
-                <div class="menu">
-                    <ul>
-                        <li class="l1">
-                        <a id="new_button" href="#">New</a>
-                        </li>
-                        <li class="l2">
-                        <a onclick="chrome.tabs.create({url: 'mailto:alex.korsak@gmail.com'}); return false;" href="#">Feedback</a>
-                        </li>
-                    </ul>
-                    <span>by Alexander Korsak</span> 
-                </div>
+        <div class="menu">
+          <ul>
+            <li class="l1">
+            <a id="new_button" href="#">New</a>
+            </li>
+            <li class="l2">
+            <a onclick="chrome.tabs.create({url: 'mailto:alex.korsak@gmail.com'}); return false;" href="#">Feedback</a>
+            </li>
+          </ul>
+          <span>by Alexander Korsak</span>
+        </div>
 
-                <div class="clear"></div>
+        <div class="clear"></div>
 
-                <div id="high_scores" class="shadow">
-                    <h3>High Scores:</h3>
-                    <ul id="scores_table">
-                    </ul>
-                </div>
+        <div id="high_scores" class="shadow">
+          <h3>High Scores:</h3>
+          <ul id="scores_table">
+          </ul>
+        </div>
 
 
-                <div id="game_container" class="shadow">
-                    <!-- place there game -->
+        <div id="game_container" class="shadow">
+          <!-- place there game -->
 
-                    <div id="game_over" class="shadow" style="display:none">
-                        <h1>Game Over!</h1>
-                        <h3>Your Scores: <span id="scores">0</span></h3>
-                        <h3>Name: <input type="text" id="username"/></h3>
-                        <center>
-                            <a href="#" id="save_button" class="shadow">Save</a>
-                            <span>or <a href="#" id="close_button">Close</a>
-                            </center>
-                        </div>
-                    </div>
+          <div id="game_over" class="shadow" style="display:none">
+            <h1>Game Over!</h1>
+            <h3>Your Scores: <span id="scores">0</span></h3>
+            <h3>Name: <input type="text" id="username"/></h3>
+            <center>
+              <a href="#" id="save_button" class="shadow">Save</a>
+              <span>or <a href="#" id="close_button">Close</a>
+              </center>
+            </div>
+          </div>
 
-                    <div id="game_scores" class="shadow">
-                        <div class='left' style='float: left;width: 70px;'>
-                            <h3>Scores:</h3>
-                            <b><p id="scores_number">0</p></b>
-                            <br />
-                            <h3>Level:</h3>
-                            <b><p id="level_number">0</p></b>
-                        </div>
-                        <div class='right'>
-                            <h3>Next Shape:</h3>
-                            <div id='current_shape_container'>
-                            </div>
-                        </div>
-                    </div>
+          <div id="game_scores" class="shadow">
+            <div class='left' style='float: left;width: 70px;'>
+              <h3>Scores:</h3>
+              <b><p id="scores_number">0</p></b>
+              <br />
+              <h3>Level:</h3>
+              <b><p id="level_number">0</p></b>
+            </div>
+            <div class='right'>
+              <h3>Next Shape:</h3>
+              <div id='current_shape_container'>
+              </div>
+            </div>
+          </div>
 
-                    <div id="game_controls" class="shadow">
-                        <div class="box">
-                            <h3>Game controls:</h3>
-                            <ul>
-                                <li><b>b</b> - begin</li>
-                                <li><b>r</b> - restart</li>
-                                <li><b>p</b> - pause/resume</li>
-                            </ul>
-                        </div>
-                        <div class="box">
-                            <h3>Shape controls:</h3>
-                            <ul>
-                                <li><b>a/left arrow</b> - move to the left</li>
-                                <li><b>d/right arrow</b> - move to the right</li>
-                                <li><b>s/bottom arrow</b> - move to the bottom quickly</li>
-                                <li><b>space/top arrow</b> - rotate the shape</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="clear"></div>
-
-                    <iframe src="http://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Feeehcmbhicglclggakomjhhlmemhjbde&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>
-
-                </div>
-
+          <div id="game_controls" class="shadow">
+            <div class="box">
+              <h3>Game controls:</h3>
+              <ul>
+                <li><b>b</b> - begin</li>
+                <li><b>r</b> - restart</li>
+                <li><b>p</b> - pause/resume</li>
+              </ul>
             </div>
 
-            <script type="text/javascript" language="javascript" charset="utf-8" src='public/assets/common.js' /></script>
-            <script type="text/javascript" language="javascript" charset="utf-8" src='public/assets/game.js'></script>
+            <div class="box">
+              <h3>Shape controls:</h3>
+              <ul>
+                <li><b>a/left arrow</b> - move to the left</li>
+                <li><b>d/right arrow</b> - move to the right</li>
+                <li><b>s/bottom arrow</b> - move to the bottom quickly</li>
+                <li><b>space/top arrow</b> - rotate the shape</li>
+              </ul>
+            </div>
+          </div>
 
-            <script type="text/javascript" charset="utf-8">
-                // <![CDATA[
-                window.onload = function() {
-                    init();
-                };
-                // ]]>
-            </script>
+          <div class="clear"></div>
+
+          <iframe src="http://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Feeehcmbhicglclggakomjhhlmemhjbde&amp;layout=standard&amp;show_faces=true&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;" allowTransparency="true"></iframe>
+        </div>
+      </div>
+
+      <script type="text/javascript" language="javascript" charset="utf-8" src='public/assets/common.js' /></script>
+      <script type="text/javascript" language="javascript" charset="utf-8" src='public/assets/game.js'></script>
+
+      <script type="text/javascript" charset="utf-8">
+        // <![CDATA[
+      window.onload = function() {
+        init();
+      };
+// ]]>
+</script>
   </body>
 </html>
 

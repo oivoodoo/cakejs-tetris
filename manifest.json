@@ -1,1 +1,1 @@
-{"name":"Tetris","app":{"launch":{"local_path":"game.html"}},"icons":{"128":"images/icon_128.png","16":"images/icon.png"},"version":"1.20","description":"Tired? Then it's time to move!","permissions":["tabs"]}
+{"permissions":["tabs"],"name":"Tetris","icons":{"16":"images/icon.png","128":"images/icon_128.png"},"description":"Tired? Then it's time to move!","app":{"launch":{"local_path":"game.html"}},"version":"1.24"}

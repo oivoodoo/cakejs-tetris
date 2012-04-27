@@ -8,7 +8,7 @@ files = ["game.html", "manifest.json"]
 task :build do
   Rake::Task['build:minor'].invoke
 
-  # compress all js files and then place into 
+  # compress all js files and then place into
   # public/assets folder
   sh "jammit"
 
@@ -16,12 +16,13 @@ task :build do
   sh "rm -rf bin/ ; mkdir bin"
 
   folders.each do |f|
-    sh "cp -r #{f}/ build/"
+    sh "cp -r #{f}/ build/#{f}"
   end
   files.each do |f|
     sh "cp #{f} build/#{f}"
   end
 
+  sh "rm -rf build/public/assets/*.gz"
   sh "zip -r build.zip build/"
   sh "mv build.zip bin/"
   sh "rm -rf build/"
