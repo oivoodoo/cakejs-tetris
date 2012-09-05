@@ -18,11 +18,18 @@ task :build do
   sh "cp public/game.html ."
 
   page = File.read('game.html')
-  page = page.gsub(/\/assets/, 'public/assets')
-  page = page.gsub(/\/css/, 'public/css')
+  page.gsub!(/\/assets/, 'public/assets')
+  page.gsub!(/\/assets\/css/, '/css')
 
   File.open('game.html', 'w') do |file|
     file.write(page)
+  end
+
+  styles = File.read('public/assets/css/styles.css')
+
+  styles.gsub!(/url\(\'/, "url('..")
+  File.open('public/css/styles.css', 'w') do |file|
+    file.write(styles)
   end
 
   folders.each do |f|
