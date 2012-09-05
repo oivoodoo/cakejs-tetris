@@ -1,7 +1,9 @@
-source 'http://rubygems.org'
+source "http://rubygems.org"
 
-gem 'jammit'
-gem 'rake'
-gem 'json'
+gem 'sinatra'
+gem 'rack-offline'
+gem 'heroku'
 gem 'versionomy'
-gem 'rdebug'
+gem 'jammit'
+gem 'debugger'
+

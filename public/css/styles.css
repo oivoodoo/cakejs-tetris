@@ -1,7 +1,7 @@
 @font-face {
     font-family: "OrbitronMed";
-    src: url('../fonts/orbitron-medium.eot');
-    src: local('☺'), url("../fonts/orbitron-medium.otf") format("opentype");
+    src: url('/fonts/orbitron-medium.eot');
+    src: local('☺'), url("/fonts/orbitron-medium.otf") format("opentype");
 }
 
 /* Reset */
@@ -24,7 +24,7 @@ a, font, img, ul, li {
 
 body {
     line-height: 1;
-    background: url(../images/background.jpg); /* image for body made with Photoshop using noise filter (gaussian monochromatic) on #ccc */
+    background: url(/images/background.jpg); /* image for body made with Photoshop using noise filter (gaussian monochromatic) on #ccc */
     font-family: Georgia, Verdana, Lucida Sans Unicode�, sans-serif;
     font-size: 12px;
     color: #999;

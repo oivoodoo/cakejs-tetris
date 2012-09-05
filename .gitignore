@@ -7,7 +7,6 @@ tmp/
 *~
 config/database.yml
 public/system/*
-public/assets/*
 vendor/rails
 *.swp
 *.swo

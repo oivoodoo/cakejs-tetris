@@ -2,7 +2,7 @@ require 'rake'
 require 'json'
 require 'versionomy'
 
-folders = ["fonts", "images", "css", 'public']
+folders = ['public']
 files = ["game.html", "manifest.json"]
 
 task :build do
@@ -14,6 +14,16 @@ task :build do
 
   sh "rm -rf build/ ; mkdir build"
   sh "rm -rf bin/ ; mkdir bin"
+
+  sh "cp public/game.html ."
+
+  page = File.read('game.html')
+  page = page.gsub(/\/assets/, 'public/assets')
+  page = page.gsub(/\/css/, 'public/css')
+
+  File.open('game.html', 'w') do |file|
+    file.write(page)
+  end
 
   folders.each do |f|
     sh "cp -r #{f}/ build/#{f}"
