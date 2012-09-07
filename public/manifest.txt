@@ -15,6 +15,5 @@
   "appcache_path": "/application.manifest",
   "orientation": "portrait,landscape-secondary",
   "fullscreen": "true",
-  },
   "default_locale": "en"
 }
