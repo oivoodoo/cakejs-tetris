@@ -1,0 +1,20 @@
+{
+  "version": "1.31",
+  "name": "Tetris",
+  "description": "Tetris is a classic game",
+  "icons": {
+    "16": "/images/icon_16.png",
+    "48": "/images/icon_48.png",
+    "128": "/images/icon_128.png"
+  },
+  "developer": {
+    "name": "Alexander Korsak <alex.korsak@gmail.com>",
+    "url": "http://oivoodoo.no.de/"
+  },
+  "installs_allowed_from": ["*"],
+  "appcache_path": "/application.manifest",
+  "orientation": "portrait,landscape-secondary",
+  "fullscreen": "true",
+  },
+  "default_locale": "en"
+}
