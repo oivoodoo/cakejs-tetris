@@ -16,7 +16,7 @@ Array.prototype.remove = function() {
         }
     }
     return this;
-}
+};
 
 init = function() {
   var c = E.canvas(GameContainer.width, GameContainer.height);
@@ -31,25 +31,38 @@ init = function() {
 
   ;(function($) {
 
-    $("#new_button").click(function() {
+    $('#scores_button').click(function(e) {
+      if (typeof(chrome) !== 'undefined') {
+        e.preventDefault();
+
+        chrome.tabs.create({url: 'http://oivoodoo.no.de/top'});
+      }
+    });
+
+    $("#new_button").click(function(e) {
+      e.preventDefault();
+
       game.restart();
       game.start();
     });
 
-    $("#save_button").click(function() {
-      if ($("#username").val() != "" && !!$("#username").val()) {
+    $("#save_button").click(function(e) {
+      e.preventDefault();
+
+      var username = $("#username").val();
+
+      if (username !== "" && !!username) {
         $.post('http://oivoodoo.no.de/create', {
           score: {
-            username: $("#username").val(),
+            username: username,
             scores: game.scores
           }
         }, function() {
           update_scores_table();
         });
       }
-      $("#game_over").fadeOut();
 
-      return false;
+      $("#game_over").fadeOut();
     });
 
     $("#close_button").click(function() {
@@ -60,14 +73,17 @@ init = function() {
 
     function update_scores_table() {
       $("#scores_table").html('');
+
       $.getJSON('http://oivoodoo.no.de/top/json', function(data) {
         var html = "";
+
         $.each(data, function(i, o) {
           html += "<li>" + o.username + ": " + o.scores + "</li>";
         });
+
         $("#scores_table").html(html);
       });
-    };
+    }
 
     update_scores_table();
   })($);
