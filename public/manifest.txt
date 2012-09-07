@@ -13,7 +13,7 @@
   },
   "installs_allowed_from": ["*"],
   "appcache_path": "/application.manifest",
-  "orientation": "portrait,landscape-secondary",
+  "orientation": "portrait-primary",
   "fullscreen": "true",
   "default_locale": "en"
 }
