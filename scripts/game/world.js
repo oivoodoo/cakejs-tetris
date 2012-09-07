@@ -32,7 +32,7 @@ init = function() {
   ;(function($) {
 
     $('#scores_button').click(function(e) {
-      if (typeof(chrome) !== 'undefined') {
+      if (window.location.host !== 'tetris-app.herokuapp.com') {
         e.preventDefault();
 
         chrome.tabs.create({url: 'http://oivoodoo.no.de/top'});
