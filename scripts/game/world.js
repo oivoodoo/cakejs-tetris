@@ -78,7 +78,7 @@ init = function() {
         var html = "";
 
         $.each(data, function(i, o) {
-          html += "<li>" + o.username + ": " + o.scores + "</li>";
+          html += "<li>" + escape(o.username) + ": " + escape(o.scores) + "</li>";
         });
 
         $("#scores_table").html(html);
