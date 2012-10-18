@@ -18,6 +18,19 @@ Array.prototype.remove = function() {
     return this;
 };
 
+var are=new Array(33,34,35,36,37,38,39,40);
+
+$(function() {
+  $(document).keydown(function(e) {
+     var key = e.which;
+     if($.inArray(key,are) > -1) {
+       e.preventDefault();
+       return false;
+     }
+     return true;
+  });
+});
+
 init = function() {
   var c = E.canvas(GameContainer.width, GameContainer.height);
   var d = E('div', { id: 'container' });
@@ -78,7 +91,7 @@ init = function() {
         var html = "";
 
         $.each(data, function(i, o) {
-          html += "<li>" + escape(o.username) + ": " + escape(o.scores) + "</li>";
+          html += "<li>" + o.username + ": " + escape(o.scores) + "</li>";
         });
 
         $("#scores_table").html(html);
