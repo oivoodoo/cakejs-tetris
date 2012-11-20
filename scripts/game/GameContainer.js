@@ -228,8 +228,6 @@ GameContainer = Klass(CanvasNode, {
   },
 
   gameover: function() {
-    console.log("Guys, please try to write own games instead of playing with kid queries.");
-
     this.pause();
     this.game_state = this.GAME_OFF;
     this.scores = this.score.scores;

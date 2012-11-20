@@ -43,14 +43,7 @@ init = function() {
   var game = new GameContainer(c, new NextShape(c2));
 
   ;(function($) {
-
-    $('#scores_button').click(function(e) {
-      if (window.location.host !== 'tetris-app.herokuapp.com') {
-        e.preventDefault();
-
-        chrome.tabs.create({url: 'http://oivoodoo.no.de/top'});
-      }
-    });
+    Playtomic.Log.View("951461", "b039ded4f41e4a97", "079d4a76cbde49baaac6272e783772", document.location);
 
     $("#new_button").click(function(e) {
       e.preventDefault();
@@ -62,16 +55,18 @@ init = function() {
     $("#save_button").click(function(e) {
       e.preventDefault();
 
-      var username = $("#username").val();
+      var score = {
+        Name: $("#username").val(),
+        Points: game.scores
+      };
 
-      if (username !== "" && !!username) {
-        $.post('http://oivoodoo.no.de/create', {
-          score: {
-            username: username,
-            scores: game.scores
+      if (score.Name !== "" && !!score.Name) {
+        Playtomic.Leaderboards.Save(score, "highscores", function(response) {
+          if (response.Success) {
+            update_scores_table();
+          } else {
+            console.log("You got an error on saving scores!");
           }
-        }, function() {
-          update_scores_table();
         });
       }
 
@@ -85,16 +80,24 @@ init = function() {
     });
 
     function update_scores_table() {
-      $("#scores_table").html('');
+      var container = $("#scores_table");
+      container.html('');
 
-      $.getJSON('http://oivoodoo.no.de/top/json', function(data) {
-        var html = "";
+      Playtomic.Leaderboards.List("highscores", function(scores, numscores, response) {
+        if (response.Success) {
+          var html = [];
 
-        $.each(data, function(i, o) {
-          html += "<li>" + o.username + ": " + escape(o.scores) + "</li>";
-        });
+          for(var i = 0; i < scores.length; i++) {
+            if (i === 50) break;
 
-        $("#scores_table").html(html);
+            var score = scores[i];
+            html.push("<li>" + score.Name + ": " + score.Points + " - " + score.RDate + "</li>");
+          }
+
+          container.html(html.join(''));
+        } else {
+          console.log("You can't get highscores from the playtomic server");
+        }
       });
     }
 
