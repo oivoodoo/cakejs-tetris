@@ -91,7 +91,7 @@ init = function() {
             if (i === 50) break;
 
             var score = scores[i];
-            html.push("<li>" + score.Name + ": " + score.Points + " - " + score.RDate + "</li>");
+            html.push("<li>" + score.Name + ": " + score.Points + "</li>");
           }
 
           container.html(html.join(''));
