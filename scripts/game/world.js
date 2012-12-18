@@ -43,7 +43,9 @@ init = function() {
   var game = new GameContainer(c, new NextShape(c2));
 
   ;(function($) {
-    Playtomic.Log.View("951461", "b039ded4f41e4a97", "079d4a76cbde49baaac6272e783772", document.location);
+    if (typeof(Playtomic) !== 'undefined' && Playtomic != null) {
+      Playtomic.Log.View("951461", "b039ded4f41e4a97", "079d4a76cbde49baaac6272e783772", document.location);
+    }
 
     $("#new_button").click(function(e) {
       e.preventDefault();
@@ -61,13 +63,16 @@ init = function() {
       };
 
       if (score.Name !== "" && !!score.Name) {
-        Playtomic.Leaderboards.Save(score, "highscores", function(response) {
-          if (response.Success) {
-            update_scores_table();
-          } else {
-            console.log("You got an error on saving scores!");
-          }
-        });
+        if (typeof(Playtomic) !== 'undefined' && Playtomic != null) {
+          Playtomic.Leaderboards.Save(score, "highscores", function(response) {
+
+            if (response.Success) {
+              update_scores_table();
+            } else {
+              console.log("You got an error on saving scores!");
+            }
+          });
+        } // end of playtomic block
       }
 
       $("#game_over").fadeOut();
@@ -82,6 +87,8 @@ init = function() {
     function update_scores_table() {
       var container = $("#scores_table");
       container.html('');
+
+      if (typeof(Playtomic) === 'undefined' || Playtomic == null) return;
 
       Playtomic.Leaderboards.List("highscores", function(scores, numscores, response) {
         if (response.Success) {
