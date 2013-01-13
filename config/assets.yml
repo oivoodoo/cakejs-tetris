@@ -4,6 +4,7 @@ javascripts:
   common:
     - scripts/jquery.min.js
     - scripts/cake.js
+    - scripts/playtomic.v2.2.min.js
   game:
     - scripts/game/Block.js
     - scripts/game/Shape.js
