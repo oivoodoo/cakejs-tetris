@@ -21,6 +21,10 @@ Array.prototype.remove = function() {
 var are=new Array(33,34,35,36,37,38,39,40);
 
 $(function() {
+  init();
+});
+
+$(function() {
   $(document).keydown(function(e) {
      var key = e.which;
      if($.inArray(key,are) > -1) {
