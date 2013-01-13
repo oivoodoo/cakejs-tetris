@@ -1,1 +1,1 @@
-{"offline_enabled":true,"manifest_version":2,"app":{"launch":{"local_path":"game.html"}},"version":"1.45","description":"Tired? Then it's time to move!","icons":{"128":"public/images/icon_128.png","16":"public/images/icon.png"},"name":"Tetris"}
+{"offline_enabled":true,"manifest_version":2,"app":{"launch":{"local_path":"game.html"}},"version":"1.46","description":"Tired? Then it's time to move!","icons":{"128":"public/images/icon_128.png","16":"public/images/icon.png"},"name":"Tetris"}
